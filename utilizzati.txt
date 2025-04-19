@@ -1,0 +1,15 @@
+react
+next.js
+next-auth.js
+typescript
+eslint
+lucid-rect (per le icone)
+mongoose
+react-hook-form (nel login)
+json web token
+bcrypt (per criptare e leggere password criptate)
+shadcdn/ui (componenti già fatti user interface, card, button, ecc..)
+
+
+mongo db
+mongo db atlas
