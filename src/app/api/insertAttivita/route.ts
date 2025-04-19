@@ -43,7 +43,7 @@ export async function POST(req: Request) {
       JSON.stringify({ message: "Attività inserita con successo" }),
       { status: 200 }
     );
-  } catch (error: any) {
+  } catch (error: Error | any) {
     return new Response(
       JSON.stringify({ message: error.message }),
       { status: 500 }

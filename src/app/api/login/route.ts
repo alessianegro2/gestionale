@@ -2,10 +2,9 @@ import { signToken } from "../../../../lib/jwt";
 import clientPromise from "../../../../lib/mongodb";
 import { cookies } from "next/headers";
 import bcrypt from "bcrypt";
-import { AlarmMinus } from "lucide-react";
 
 export async function POST(req: Request) {
-  let { username, password, ruolo } = await req.json();
+  const { username, password } = await req.json();
   //password = String(password).trim(); rimuovo gli spazi vuoti
   const client = await clientPromise;
   const db = client.db("gestionale"); 

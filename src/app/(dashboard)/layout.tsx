@@ -1,9 +1,6 @@
 import './styles.css';
-import Link from 'next/link';
-import Image from 'next/image';
 import Menu from '@/components/Menu';
 import Navbar from '@/components/Navbar';
-import { ReactNode } from "react";
 import { cookies } from "next/headers";
 import { verifyToken } from "../../../lib/jwt"; 
 import { redirect } from "next/navigation";

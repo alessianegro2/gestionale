@@ -1,7 +1,6 @@
 import Image from 'next/image'
 import { cookies } from "next/headers";
 import { verifyToken } from "../../lib/jwt";
-import { redirect } from 'next/dist/server/api-utils';
 import { JwtPayload } from 'jsonwebtoken';
 
 
@@ -32,6 +31,6 @@ export default async function Navbar() {
             </div>
         )
     } catch (e) {
-        return <p>Token non valido</p>;
+        return `<p>Token non valido. ${e}</p>`;
     }
 }

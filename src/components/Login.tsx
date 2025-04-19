@@ -23,7 +23,7 @@ const Login = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username, password, ruolo: "" }),
+        body: JSON.stringify({ username, password}),
       });
 
       const data = await res.json();
@@ -33,7 +33,7 @@ const Login = () => {
       } else {
         setError(data.message || "Errore nel login");
       }
-    } catch (error: any) {
+    } catch (error: Error |any) {
       setError(error.message);
     } finally {
       setLoading(false);

@@ -2,8 +2,6 @@ import { NextResponse } from 'next/server';
 import clientPromise from '../../../../lib/mongodb'; 
 
 export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-
   try {
     const client = await clientPromise;
     const db = client.db("gestionale"); 

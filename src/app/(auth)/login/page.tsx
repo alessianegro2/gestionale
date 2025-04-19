@@ -1,5 +1,4 @@
 import Login from "@/components/Login";
-import { redirect } from "next/navigation";
 
 
 const LoginPage = async () =>{

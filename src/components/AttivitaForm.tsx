@@ -77,7 +77,7 @@ const AttivitaForm = ({ onClose, defaultData }: Props) => {
       }
     } catch (error) {
       setLoading(false);
-      setMessage("Errore di rete o del server.");
+      setMessage("Errore di rete o del server." + error);
       setError(true);
     }
   };

@@ -11,7 +11,6 @@ type SortOrder = 'asc' | 'desc';
 const TableIscritti = () => {
   const [users, setUsers] = useState<any[]>([]);
   const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
   const [search, setSearch] = useState('');
   const [sortKey, setSortKey] = useState<string>('cognome');
   const [sortOrder, setSortOrder] = useState<SortOrder>('asc');
@@ -58,7 +57,6 @@ const TableIscritti = () => {
       return 0;
     });
 
-    setTotalPages(Math.ceil(data.length / pageSize));
     return data;
   }, [users, search, sortKey, sortOrder]);
 

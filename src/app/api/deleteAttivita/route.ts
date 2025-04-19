@@ -3,7 +3,7 @@ import { ObjectId } from "mongodb";
 
 export async function POST(req: Request) {
   try {
-    const { id, attivita, nome, data_i, data_f, n_settimane, costo_settimana } = await req.json();
+    const { id } = await req.json();
     console.log(id)
     if (!id) {
       return new Response(
@@ -27,7 +27,7 @@ export async function POST(req: Request) {
       JSON.stringify({ message: "Attività eliminata con successo." }),
       { status: 200 }
     );
-  } catch (error: any) {
+  } catch (error: Error | any) {
     console.error("Errore nell'eliminazione:", error);
     return new Response(
       JSON.stringify({ message: "Errore del server." }),
