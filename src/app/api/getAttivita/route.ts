@@ -7,7 +7,7 @@ export async function GET(request: Request) {
     const db = client.db("gestionale"); 
 
     const data = await db.collection('attivita').find({}).toArray();
-    console.log(data)
+    //console.log(data)
     return NextResponse.json( data );
   } catch (error) {
     console.error('Errore nella query MongoDB:', error);

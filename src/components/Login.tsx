@@ -29,7 +29,7 @@ const Login = () => {
       const data = await res.json();
 
       if (res.ok) {
-        router.push("/admin");
+        router.push("/home");
       } else {
         setError(data.message || "Errore nel login");
       }

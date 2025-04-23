@@ -19,7 +19,12 @@ const MenuItems = [
         {
             icon: Home,
             label: 'Home',
-            href: '/admin'
+            href: '/home'
+        },
+        {
+            icon: ListOrdered,
+            label: 'Iscritti',
+            href: '/iscritti'
         },
         {
             icon: PartyPopper,
@@ -30,11 +35,6 @@ const MenuItems = [
             icon: Users,
             label: 'Collaboratori',
             href: '/collaboratori'
-        },
-        {
-            icon: ListOrdered,
-            label: 'Iscritti',
-            href: '/iscritti'
         },
         {
             icon: Group,
@@ -52,12 +52,12 @@ const MenuItems = [
         {
             icon: Settings,
             label: 'Impostazioni',
-            href: '/profilo'
+            href: '/impostazioni'
         },
         {
             icon: LogOut,
             label: 'Logout',
-            href: '/profilo'
+            href: '/login'
         }]
     }
 ]

@@ -4,8 +4,8 @@ import { cookies } from "next/headers";
 import bcrypt from "bcrypt";
 
 export async function POST(req: Request) {
-  const { username, password } = await req.json();
-  //password = String(password).trim(); rimuovo gli spazi vuoti
+  let { username, password } = await req.json();
+  password = String(password).trim(); //rimuovo gli spazi vuoti
   const client = await clientPromise;
   const db = client.db("gestionale"); 
   const user = await db.collection("users").findOne({ "username": username });

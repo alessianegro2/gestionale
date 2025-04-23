@@ -27,7 +27,7 @@ const TableIscritti = () => {
 
         if (data.users.length > 0) {
           const allFields = Object.keys(data.users[0]).filter(
-            (key) => key !== '_id' && key !== 'genitore' && key!== 'gruppo' && key !=='attivita' && key != "cap" && key != "data_iscrizione" //rimossi dalla table
+            (key) => key !== '_id' && key !== 'genitore' && key!== 'gruppo'  && key != "cap" && key != "data_iscrizione" //rimossi dalla table
           );
           setFields([...allFields]);
         }

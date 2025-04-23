@@ -8,7 +8,7 @@ export async function GET(request: Request) {
 
     const total = await db.collection('iscritti').countDocuments();
     const users = await db.collection('iscritti').find({}).toArray();
-    console.log(users);
+    //console.log(users);
     return NextResponse.json({ users, total });
   } catch (error) {
     console.error('Errore nella query MongoDB:', error);
