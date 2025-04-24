@@ -52,7 +52,7 @@ const ProfiloUtente = () => {
         setNuovaPassword("");
         setConfermaPassword("");
         setPasswordCambiata(false);
-      }, 1000); // Timeout di 1 secondo
+      }, 1000); 
     } else {
       setMessaggio(result.message || "Errore nell'aggiornamento.");
     }
@@ -70,24 +70,23 @@ const ProfiloUtente = () => {
         <div className="w-full max-w-2xl bg-white p-10 shadow-2xl rounded-3xl flex flex-col items-center text-center text-lg">
           {utente.immagine ? (
             <img
-              src={utente.immagine}
+              src={`data:image/png;base64,${utente.immagine}`} 
               alt="Immagine profilo"
               className="w-32 h-32 rounded-full mb-6 object-cover shadow-md"
             />
           ) : (
             <UserCircle className="w-32 h-32 text-gray-400 mb-6" />
           )}
-
           <p className="text-2xl font-bold mb-2">{utente.username}</p>
-          <p className="text-gray-700 mb-2">{utente.admin ? "🛡️ Amministratore" : "👤 Utente standard"}</p>
-          <p className="text-gray-600 italic mb-6">{utente.descrizione}</p>
+          <p className="text-gray-700 mb-2 font-bold">{utente.admin ?" Amministratore" : " Utente standard"}</p>
+          <p className="text-gray-600 italic mb-6">Note: {utente.descrizione}</p>
 
           <div className="w-full mb-4 text-left">
             <label className="block text-gray-700 font-semibold mb-1">Password:</label>
             <div className="relative">
               <input
                 type={mostraPassword ? "text" : "password"}
-                value={utente.password} // Mostra la password in chiaro
+                value={utente.password} //mostro la password in chiaro hashata
                 readOnly
                 className="w-full px-4 py-3 border rounded-xl bg-gray-100 text-gray-600 text-sm"
               />
@@ -118,7 +117,7 @@ const ProfiloUtente = () => {
 
           <div className="fixed inset-0 flex items-center justify-center z-50">
             <div className="bg-white p-6 rounded-xl shadow-lg w-full max-w-sm">
-              <h2 className="text-lg font-bold mb-4 text-center">Modifica Password</h2>
+              <h2 className="text-lg mb-4 text-center">Modifica Password</h2>
               <div className="text-left">
                 <input
                   type="password"
@@ -151,7 +150,7 @@ const ProfiloUtente = () => {
                 </button>
                 <button
                   onClick={aggiornaPassword}
-                  className="px-4 py-2 rounded-xl bg-[#fdeb90] hover:bg-[#fdea87] text-white text-sm font-semibold"
+                  className="px-4 py-2 rounded-xl bg-[#fdeb90] hover:bg-[#fdea87] text-black text-sm font-semibold"
                 >
                   Conferma
                 </button>

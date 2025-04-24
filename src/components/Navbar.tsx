@@ -2,6 +2,7 @@ import Image from 'next/image'
 import { cookies } from "next/headers";
 import { verifyToken } from "../../lib/jwt";
 import { JwtPayload } from 'jsonwebtoken';
+import Link from 'next/link';
 
 
 export default async function Navbar() {
@@ -26,7 +27,7 @@ export default async function Navbar() {
                         <span className='text-sm leading-3 font-medium'>{user.user}</span>
                         <span className='text-[10px] text-gray-500 text-right'>{ user.ruolo}</span>
                     </div>
-                    <Image alt="" src="/profile.png" width={25} height={25}></Image>
+                    <Link href="/profilo"><Image alt="" src="/profile.png" width={25} height={25}></Image></Link>
                 </div>
             </div>
         )
