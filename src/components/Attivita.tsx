@@ -3,10 +3,10 @@
 import { useEffect, useState } from "react";
 import AttivitaForm from "./AttivitaForm";
 import { Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 type Attivita = {
   _id: string;
-  attivita: number;
   nome: string;
   data_i: string;
   data_f: string;
@@ -15,6 +15,8 @@ type Attivita = {
 };
 
 const Attivita = () => {
+  
+  const router = useRouter();
   const [attivita, setAttivita] = useState<Attivita[]>([]);
   const [showForm, setShowForm] = useState(false);
   const [selectedAttivita, setSelectedAttivita] = useState<Attivita | null>(null);
@@ -100,7 +102,6 @@ const Attivita = () => {
           {attivita.map((a) => (
             <div key={a._id} className="bg-white shadow-xl rounded-2xl p-6 relative">
               <h2 className="text-xl font-bold mb-1">{a.nome}</h2>
-              <p className="text-gray-600 mb-2">Codice: {a.attivita}</p>
               <p className="text-gray-700">
                 Dal <strong>{a.data_i}</strong> al <strong>{a.data_f}</strong>
               </p>
@@ -108,23 +109,39 @@ const Attivita = () => {
                 {a.n_settimane} settimane - {a.costo_settimana}€/settimana
               </p>
 
-              <div className="flex justify-end gap-2 mt-4">
-                <button
-                  onClick={() => {
-                    setSelectedAttivita(a);
-                    setShowForm(true);
-                  }}
-                  className="px-3 py-1 bg-[#fdeb90] hover:bg-[#fdea87] rounded-xl text-sm font-semibold"
-                >
-                  Modifica
-                </button>
-                <button
-                  onClick={() => setAttivitaDaEliminare(a)}
-                  className="px-3 py-1 bg-red-400 hover:bg-red-500 rounded-xl text-sm font-semibold text-white"
-                >
-                  Elimina
-                </button>
+              <div className="grid grid-cols-2">
+                <div className="flex justify-start gap-2 mt-4">
+                  <button
+                    onClick={() => {
+                      router.push('/iscritti');
+                    }}
+                    className="px-3 py-1 bg-[#465c9783] hover:bg-[#465c97c9] rounded-xl text-sm font-semibold text-white"
+                  >
+                    Iscritti
+                  </button>
+                  
+                </div>
+                <div className="flex justify-end gap-2 mt-4" >
+                  <button
+                    onClick={() => {
+                      setSelectedAttivita(a);
+                      setShowForm(true);
+                    }}
+                    className="px-3 py-1 bg-[#fdeb90a6] hover:bg-[#fdea87] rounded-xl text-sm font-semibold"
+                    >
+                    Modifica
+                  </button>
+                  <button
+                    onClick={() => setAttivitaDaEliminare(a)}
+                    className="px-3 py-1 bg-red-400 hover:bg-red-500 rounded-xl text-sm font-semibold text-white"
+                  >
+                    Elimina
+                  </button>
+                </div>
               </div>
+              
+
+              
             </div>
           ))}
         </div>

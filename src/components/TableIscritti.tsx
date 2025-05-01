@@ -7,6 +7,10 @@ import { Input } from '@/components/ui/input';
 import { ChevronUp, ChevronDown } from 'lucide-react';
 import IscrittoForm from './IscrittoForm';
 
+type Props = {
+  defaultData?: any;
+};
+
 type SortOrder = 'asc' | 'desc';
 
 const TableIscritti = () => {
@@ -17,30 +21,32 @@ const TableIscritti = () => {
   const [sortOrder, setSortOrder] = useState<SortOrder>('asc');
   const [fields, setFields] = useState<string[]>([]);
   const [selectedUser, setSelectedUser] = useState<any | null>(null);
+  const [showForm, setShowForm] = useState(false);
+  const [insertIscr, setInsertIscr] = useState(false);
 
 
   const pageSize = 20;
 
   useEffect(() => { 
-    const fetchUsers = async () => {
-      try {
-        const res = await fetch(`/api/getIscritti`); 
-        const data = await res.json();
-        setUsers(data.users);
-
-        if (data.users.length > 0) {
-          const allFields = Object.keys(data.users[0]).filter(
-            (key) => key !== '_id' && key !== 'genitore' && key!== 'gruppo'  && key != "cap" && key != "data_iscrizione" //rimossi dalla table
-          );
-          setFields([...allFields]);
-        }
-      } catch (err) {
-        console.error('Errore nel caricamento utenti:', err);
-      }
-    };
-
     fetchUsers(); //richiamo subito la funzione per caricare gli utenti
   }, []);
+
+  const fetchUsers = async () => {
+    try {
+      const res = await fetch(`/api/getIscritti`); 
+      const data = await res.json();
+      setUsers(data.users);
+
+      if (data.users.length > 0) {
+        const allFields = Object.keys(data.users[0]).filter(
+          (key) => key !== '_id' && key !== 'genitore' && key!== 'gruppo'  && key != "cap" && key != "data_iscrizione" //rimossi dalla table
+        );
+        setFields([...allFields]);
+      }
+    } catch (err) {
+      console.error('Errore nel caricamento utenti:', err);
+    }
+  };
 
   const sortedAndFiltered = useMemo(() => {
     let data = [...users]; 
@@ -77,6 +83,23 @@ const TableIscritti = () => {
     }
   };
 
+  const deleteUser = async (_id: any)=>{
+    try {
+      const res = await fetch(`/api/deleteIscritto`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(_id),
+      });
+      const result = await res.json();
+
+      fetchUsers(); 
+      alert(result.message);
+
+    } catch (err) {
+      console.error("Errore nell'eliminazione dell'iscritto:", err);
+    }
+  }
+
   const renderSortIcon = (key: string) => {
     if (key !== sortKey) return null;
     return sortOrder === 'asc' ? (
@@ -88,10 +111,35 @@ const TableIscritti = () => {
 
   return (
     <>
-        {selectedUser ? (
-          <IscrittoForm defaultData={selectedUser} onClose={() => setSelectedUser(null)} />
-        ) : (
-          <Card className="p-4 shadow-xl rounded-2xl border border-gray-300 max-h-[800px]">
+    {showForm ? (
+          <>
+            {selectedUser ? (
+              <>
+                <IscrittoForm defaultData={selectedUser} onClose={() =>{ setShowForm(false); setSelectedUser(null); fetchUsers()}} />
+                  </>
+            ): (
+              <>
+                <IscrittoForm onClose={() =>{ setShowForm(false);  setInsertIscr(false); fetchUsers()}} />
+              </>
+            )}
+          </>            
+        ) : ( 
+        <>
+        <div className='mt-10 mb-10' >
+          <button
+            onClick={() => {
+              setSelectedUser(null);
+              setShowForm(true);
+              setInsertIscr(true);
+            }}
+            className="absolute top-6 right-6 bg-[#fdeb90] hover:bg-[#fdea87] text-black font-bold rounded-full w-12 h-12 text-2xl flex items-center justify-center shadow-md transition m-10"
+            title="Aggiungi iscritto"
+          >
+            +
+          </button>
+        </div>
+                 
+          <Card className="p-4 shadow-xl rounded-2xl border border-gray-300 mt-10">
             <CardContent>
             <div className="flex items-center justify-between mb-4">
               <h1 className="text-xl font-bold text-black">ISCRITTI</h1>
@@ -128,20 +176,27 @@ const TableIscritti = () => {
                   {paginatedUsers.map((user) => (
                     <tr key={user._id} className="border-t">
                       {fields.map((field) => (
-                        <td key={field} className="px-4 py-2">
-                          {String(user[field])}
-                        </td>
+                        user[field] !== undefined ? (
+                          <td key={field} className="px-4 py-2">
+                            {String(user[field])}
+                          </td>
+                        ) : null
                       ))}
                       <td className="px-4 py-2">
-                        <Button onClick={() => setSelectedUser(user)} className='odd:bg-[#f7e690]'>
+                        <Button onClick={() => {setShowForm(true); setSelectedUser(user);}} className='odd:bg-[#f7e690] cursor-pointer'>
                           Modifica
                         </Button>
                       </td>
                       <td className="px-4 py-2">
-                        <Button onClick={() => alert(`Visualizza doc ${user._id}`)} className='odd:bg-[#f7e690]'>
-                          Documenti
+                        <Button onClick={() => { deleteUser(user._id);}} className='bg-red-700 cursor-pointer text-white'>
+                          Elimina
                         </Button>
                       </td>
+                      {/*<td className="px-4 py-2">
+                        <Button onClick={() => alert(`Visualizza doc ${user._id}`)} className= 'bg-[#465c979a]'>
+                          Documenti
+                        </Button>
+                      </td>*/}
                     </tr>
                   ))}
                 </tbody>
@@ -149,6 +204,7 @@ const TableIscritti = () => {
             </div>
       </CardContent>
     </Card> 
+    </>
   )} 
    </>
   );

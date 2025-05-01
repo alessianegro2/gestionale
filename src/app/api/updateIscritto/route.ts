@@ -9,26 +9,7 @@ const formatDate = (dateStr: string) => {
 export async function POST(req: Request) {
   try {
     const data = await req.json();
-
-    const {
-      _id,
-      nome,
-      cognome,
-      sesso,
-      data_n,
-      luogo_n,
-      indirizzo,
-      citta,
-      cap,
-      nazionalita,
-      autorizzato_uscita,
-      note,
-      genitore,
-      gruppo,
-      attivita,
-    } = data;
-
-    if (!_id) {
+    if (!data._id) {
       return new Response(
         JSON.stringify({ message: "ID mancante. Impossibile aggiornare l'iscritto." }),
         { status: 400 }
@@ -40,23 +21,30 @@ export async function POST(req: Request) {
     const {ObjectId} = require("mongodb");
 
     const updated = await db.collection("iscritti").updateOne(
-      { "_id": new ObjectId(_id) },
+      { "_id": new ObjectId(data._id) },
       {
         $set: {
-          nome,
-          cognome,
-          sesso,
-          data_n: formatDate(data_n),
-          luogo_n,
-          indirizzo,
-          citta,
-          cap,
-          nazionalita,
-          autorizzato_uscita,
-          note,
-          genitore,
-          gruppo,
-          attivita,
+          nome: data.nome,
+          cognome: data.cognome,
+          sesso: data.sesso,
+          data_n: formatDate(data.data_n),
+          luogo_n: data.luogo_n,
+          indirizzo: data.indirizzo,
+          citta: data.citta,
+          cap: data.cap,
+          nazionalita: data.nazionalita,
+          autorizzato_uscita: data.autorizzato_uscita,
+          note: data.note,
+          genitore:{
+            nome: data.genitore.nome ,
+            cognome: data.genitore.cognome,
+            telefono: data.genitore.telefono,
+            email: data.genitore.email
+          },
+          disabilita: data.disabilita,
+          privacy: data.privacy, 
+          trasporto: data.trasporto, 
+          pranzo: data.pranzo
         },
       }
     );
