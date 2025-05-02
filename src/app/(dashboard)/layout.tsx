@@ -1,4 +1,4 @@
-import './styles.css';
+import '../styles.css';
 import Menu from '@/components/Menu';
 import Navbar from '@/components/Navbar';
 import { cookies } from "next/headers";

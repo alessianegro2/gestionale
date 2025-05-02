@@ -1,13 +1,14 @@
-export default async function RootLayout({
+import '../styles.css';
+
+export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
   return (
-    <html>
-      <body>
+      <div className='h-screen'>
         {children}
-      </body>
-    </html>
+      </div>
+
   )
 }
