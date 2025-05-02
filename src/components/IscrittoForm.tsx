@@ -93,10 +93,10 @@ const IscrittoForm = ({ onClose, defaultData }: Props) => {
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    fetchAttivita()
+    fetchAttivita();
     if (defaultData) {
-      setForm({
-        ...form,
+      setForm(prev => ({
+        ...prev,
         ...defaultData,
         data_n: formatToInputDate(defaultData.data_n),
         data_iscrizione: formatToInputDate(defaultData.data_iscrizione),
@@ -104,10 +104,10 @@ const IscrittoForm = ({ onClose, defaultData }: Props) => {
           ...defaultData.genitore,
           telefono: defaultData.genitore.telefono.toString(),
         },
-      });
+      }));
     }
   }, [defaultData]);
-
+  
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target as HTMLInputElement;
     const checked = (e.target as HTMLInputElement).checked;
