@@ -94,7 +94,7 @@ const Attivita = () => {
               setShowForm(false);
               fetchAttivita();
             }}
-            defaultData={selectedAttivita}
+            defaultData={selectedAttivita || undefined}
           />
         </div>
       ) : (
