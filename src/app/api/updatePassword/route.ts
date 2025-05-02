@@ -1,5 +1,6 @@
 import clientPromise from "../../../../lib/mongodb";
 import bcrypt from "bcrypt";
+import {ObjectId} from "mongodb";
 
 export async function POST(req: Request) {
   try {
@@ -17,7 +18,7 @@ export async function POST(req: Request) {
     const db = client.db("gestionale");
 
     const result = await db.collection("users").updateOne(
-      { _id: new (require("mongodb").ObjectId)(id) },
+      { _id: new ObjectId(id) },
       { $set: { password: hashedPassword } }
     );
 

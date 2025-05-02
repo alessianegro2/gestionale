@@ -35,9 +35,10 @@ export async function POST(req: Request) {
       JSON.stringify({ message: "Attività aggiornata con successo" }),
       { status: 200 }
     );
-  } catch (error: Error | any) {
+  } catch (error: Error | unknown) {
+    const errorMessage = error instanceof Error ? error.message : "Unknown error occurred";
     return new Response(
-      JSON.stringify({ message: error.message }),
+      JSON.stringify({ message: errorMessage }),
       { status: 500 }
     );
   }

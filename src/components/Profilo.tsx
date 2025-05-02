@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Eye, EyeOff, UserCircle } from "lucide-react";
+import Image from "next/image"
 
 type Utente = {
   _id: string;
@@ -69,7 +70,7 @@ const ProfiloUtente = () => {
       {utente ? (
         <div className="w-full max-w-2xl bg-white p-10 shadow-2xl rounded-3xl flex flex-col items-center text-center text-lg">
           {utente.immagine ? (
-            <img
+            <Image
               src={`data:image/png;base64,${utente.immagine}`} 
               alt="Immagine profilo"
               className="w-32 h-32 rounded-full mb-6 object-cover shadow-md"

@@ -27,7 +27,7 @@ export async function POST(req: Request) {
       JSON.stringify({ message: "Iscritto eliminato con successo." }),
       { status: 200 }
     );
-  } catch (error: Error | any) {
+  } catch (error: Error | unknown) {
     console.error("Errore nell'eliminazione:", error);
     return new Response(
       JSON.stringify({ message: "Errore del server." }),

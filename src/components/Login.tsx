@@ -33,8 +33,12 @@ const Login = () => {
       } else {
         setError(data.message || "Errore nel login");
       }
-    } catch (error: Error |any) {
-      setError(error.message);
+    } catch (error: Error | unknown) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("An unknown error occurred");
+      }
     } finally {
       setLoading(false);
     }

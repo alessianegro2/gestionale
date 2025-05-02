@@ -3,9 +3,18 @@
 import { Loader2 } from "lucide-react";
 import { useState, useEffect } from "react";
 
+
+type AttivitaData = {
+  nome: string;
+  data_i: string;
+  data_f: string;
+  costo_settimana: number;
+  n_settimane: number;
+};
+
 type Props = {
   onClose: () => void;
-  defaultData?: any;
+  defaultData?: AttivitaData;
 };
 
 // Convertitore da "dd-mm-yyyy" a "yyyy-mm-dd"
@@ -17,12 +26,11 @@ const formatToInputDate = (dateStr: string) => {
 
 const AttivitaForm = ({ onClose, defaultData }: Props) => {
   const [form, setForm] = useState({
-    attivita: "",
     nome: "",
     data_i: "",
     data_f: "",
-    costo_settimana: "",
-    n_settimane: "",
+    costo_settimana: 0,
+    n_settimane: 0,
   });
 
   const [message, setMessage] = useState<string | null>(null);
@@ -32,12 +40,11 @@ const AttivitaForm = ({ onClose, defaultData }: Props) => {
   useEffect(() => {
     if (defaultData) {
       setForm({
-        attivita: defaultData.attivita || "",
         nome: defaultData.nome || "",
         data_i: formatToInputDate(defaultData.data_i),
         data_f: formatToInputDate(defaultData.data_f),
-        costo_settimana: defaultData.costo_settimana || "",
-        n_settimane: defaultData.n_settimane || "",
+        costo_settimana: defaultData.costo_settimana || 0,
+        n_settimane: defaultData.n_settimane || 0
       });
     }
   }, [defaultData]);
@@ -85,7 +92,6 @@ const AttivitaForm = ({ onClose, defaultData }: Props) => {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       {[
-        { label: "Codice", name: "attivita", type: "text" },
         { label: "Nome", name: "nome", type: "text" },
         { label: "Data Inizio", name: "data_i", type: "date" },
         { label: "Data Fine", name: "data_f", type: "date" },

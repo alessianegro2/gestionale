@@ -7,22 +7,51 @@ import { Input } from '@/components/ui/input';
 import { ChevronUp, ChevronDown } from 'lucide-react';
 import IscrittoForm from './IscrittoForm';
 
+type IscrittoData={
+  _id: string,
+    nome: string,
+    cognome: string,
+    sesso: string,
+    data_n: string,
+    luogo_n: string,
+    indirizzo:string,
+    citta: string,
+    cap: string,
+    nazionalita: string
+    data_iscrizione: string
+    autorizzato_uscita: string
+    note:string,
+    genitore: {
+      cognome:string,
+      nome: string,
+      telefono: number,
+      email:string
+    },
+    disabilita: boolean,
+    privacy: boolean,
+    trasporto: boolean,
+    pranzo: string,
+    turni: {
+      idT:string
+    }
+}
+
 type Props = {
-  defaultData?: any;
+  defaultData?: string ;
 };
 
 type SortOrder = 'asc' | 'desc';
 
 const TableIscritti = () => {
-  const [users, setUsers] = useState<any[]>([]);
+  const [users, setUsers] = useState<IscrittoData[]>([]);
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState('');
   const [sortKey, setSortKey] = useState<string>('cognome');
   const [sortOrder, setSortOrder] = useState<SortOrder>('asc');
   const [fields, setFields] = useState<string[]>([]);
-  const [selectedUser, setSelectedUser] = useState<any | null>(null);
+  const [selectedUser, setSelectedUser] = useState<IscrittoData | null>(null);
   const [showForm, setShowForm] = useState(false);
-  const [insertIscr, setInsertIscr] = useState(false);
+  const [_insertIscr, setInsertIscr] = useState(false);
 
 
   const pageSize = 20;
@@ -58,8 +87,8 @@ const TableIscritti = () => {
     }
 
     data.sort((a, b) => {
-      const aVal = a[sortKey] ?? '';
-      const bVal = b[sortKey] ?? '';
+      const aVal = a[sortKey as keyof IscrittoData] ?? '';
+      const bVal = b[sortKey as keyof IscrittoData] ?? '';
 
       if (aVal < bVal) return sortOrder === 'asc' ? -1 : 1;
       if (aVal > bVal) return sortOrder === 'asc' ? 1 : -1;
@@ -83,7 +112,7 @@ const TableIscritti = () => {
     }
   };
 
-  const deleteUser = async (_id: any)=>{
+  const deleteUser = async (_id: string)=>{
     try {
       const res = await fetch(`/api/deleteIscritto`, {
         method: "POST",
@@ -176,9 +205,9 @@ const TableIscritti = () => {
                   {paginatedUsers.map((user) => (
                     <tr key={user._id} className="border-t">
                       {fields.map((field) => (
-                        user[field] !== undefined ? (
+                        user[field as keyof IscrittoData] !== undefined ? (
                           <td key={field} className="px-4 py-2">
-                            {String(user[field])}
+                            {String(user[field as keyof IscrittoData])}
                           </td>
                         ) : null
                       ))}

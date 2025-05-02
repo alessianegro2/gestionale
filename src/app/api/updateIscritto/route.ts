@@ -1,4 +1,5 @@
 import clientPromise from "../../../../lib/mongodb";
+import {ObjectId } from "mongodb";
 
 // converto data da yyyy-mm-dd a dd-mm-yyyy
 const formatDate = (dateStr: string) => {
@@ -18,7 +19,6 @@ export async function POST(req: Request) {
 
     const client = await clientPromise;
     const db = client.db("gestionale");
-    const {ObjectId} = require("mongodb");
 
     const updated = await db.collection("iscritti").updateOne(
       { "_id": new ObjectId(data._id) },
@@ -60,9 +60,10 @@ export async function POST(req: Request) {
       JSON.stringify({ message: "Iscritto aggiornato con successo" }),
       { status: 200 }
     );
-  } catch (error: Error | any) {
+  } catch (error: Error | unknown) {
+    const errorMessage = error instanceof Error ? error.message : "Unknown error occurred";
     return new Response(
-      JSON.stringify({ message: error.message }),
+      JSON.stringify({ message: errorMessage }),
       { status: 500 }
     );
   }

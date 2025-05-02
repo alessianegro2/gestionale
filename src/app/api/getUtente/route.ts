@@ -1,11 +1,10 @@
 import clientPromise from "../../../../lib/mongodb";
 import { verifyToken } from "../../../../lib/jwt";
 import { cookies } from "next/headers";
-import bcrypt from "bcrypt";
+import { ObjectId } from "mongodb";
 
-export async function GET(req: Request) {
+export async function GET(_req: Request) {
   try {
-    // otteniìgo il token dal cookie
     const cookieStore = cookies();
     const token = (await cookieStore).get("token");
 
@@ -15,19 +14,15 @@ export async function GET(req: Request) {
 
     const decoded = verifyToken(token.value);
 
-    if (!decoded) {
-      return new Response(JSON.stringify({ message: "Token non valido" }), { status: 401 });
-    }
-
     if (typeof decoded !== "object" || !decoded) {
       return new Response(JSON.stringify({ message: "Token non valido" }), { status: 401 });
     }
+
     const { id, user } = decoded as { id: string; user: string };
     const client = await clientPromise;
     const db = client.db("gestionale");
 
-    const { ObjectId } = require("mongodb");
-    const userDoc = await db.collection("users").findOne({ "_id": new ObjectId(id), "username": user });
+    const userDoc = await db.collection("users").findOne({ _id: new ObjectId(id), username: user });
 
     if (!userDoc) {
       return new Response(JSON.stringify({ message: "Utente non trovato" }), { status: 404 });
@@ -39,7 +34,7 @@ export async function GET(req: Request) {
       password: userDoc.password,
       admin: userDoc.admin,
       descrizione: userDoc.descrizione,
-      immagine: userDoc.immagine, // opzionale
+      immagine: userDoc.immagine,
     };
 
     return new Response(JSON.stringify(userData), { status: 200 });

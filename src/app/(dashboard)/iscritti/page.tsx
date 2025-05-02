@@ -1,5 +1,4 @@
 import TableIscritti from "@/components/TableIscritti"
-import IscrittoForm from "@/components/IscrittoForm"
 
 const IscrittiPage=()=>{
     return(

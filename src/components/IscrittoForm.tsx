@@ -3,9 +3,38 @@
 import { Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 
+type FormData={
+  _id: string,
+    nome: string,
+    cognome: string,
+    sesso: string,
+    data_n: string,
+    luogo_n: string,
+    indirizzo:string,
+    citta: string,
+    cap: string,
+    nazionalita: string
+    data_iscrizione: string
+    autorizzato_uscita: string
+    note:string,
+    genitore: {
+      cognome:string,
+      nome: string,
+      telefono: number,
+      email:string
+    },
+    disabilita: boolean,
+    privacy: boolean,
+    trasporto: boolean,
+    pranzo: string,
+    turni: {
+      idT:string
+    }
+}
+
 type Props = {
   onClose: () => void;
-  defaultData?: any;
+  defaultData? : FormData;
 };
 
 const formatToInputDate = (dateStr: string) => {
@@ -71,6 +100,10 @@ const IscrittoForm = ({ onClose, defaultData }: Props) => {
         ...defaultData,
         data_n: formatToInputDate(defaultData.data_n),
         data_iscrizione: formatToInputDate(defaultData.data_iscrizione),
+        genitore: {
+          ...defaultData.genitore,
+          telefono: defaultData.genitore.telefono.toString(),
+        },
       });
     }
   }, [defaultData]);
@@ -107,7 +140,7 @@ const IscrittoForm = ({ onClose, defaultData }: Props) => {
         setMessage(result.message || "Errore nel salvataggio.");
         setError(true);
       }
-    } catch (err) {
+    } catch (_err) {
       setLoading(false);
       setMessage("Errore di rete o del server.");
       setError(true);
@@ -125,7 +158,7 @@ const IscrittoForm = ({ onClose, defaultData }: Props) => {
     }
   }
 
-  const fetchTurniA= async(_idA:any)=>{
+  const fetchTurniA= async(_idA:string)=>{
     try {
       //console.log("fetch attività")
       const res = await fetch(`/api/getTurniA`, {
@@ -218,7 +251,7 @@ const IscrittoForm = ({ onClose, defaultData }: Props) => {
       <div>
         <label className="block text-sm font-medium mb-1">Autorizzato all'Uscita</label>
         <select name="autorizzato_uscita" value={form.autorizzato_uscita} onChange={handleChange} className="w-full px-4 py-2 border border-gray-300 rounded-xl">
-          <option value="">Seleziona</option>
+          <option value=" ">Seleziona</option>
           <option value="Si">Si</option>
           <option value="No">No</option>
         </select>
@@ -277,16 +310,22 @@ const IscrittoForm = ({ onClose, defaultData }: Props) => {
 
       {/*ATTIVITA'*/}
       <h3 className="font-bold text-xl text-center">Attività</h3>
-      {attivita.map((a)=>{
-        <h4>{a.nome}</h4>
-        fetchTurniA(a._id);
-        //console.log(a)
-        /*{turni ? (
-          {turni.map((t)=>{
-            <input type="checkbox" value={t._id} checked={form.turni.idT === t._id} onChange={handleChange} />
-          })}
-        )}*/      
-      })}
+      {attivita.map((a) => (
+        <div key={a._id}>
+          <h4>{a.nome}</h4>
+          {turni.map((t) => (
+            <div key={t._id}>
+              <input
+                type="checkbox"
+                value={t._id}
+                checked={form.turni.idT === t._id}
+                onChange={handleChange}
+              />
+              <label>{t.data_i} - {t.data_f}</label>
+            </div>
+          ))}
+        </div>
+      ))}
 
 
       <div className="text-center mt-2 min-h-[20px]">

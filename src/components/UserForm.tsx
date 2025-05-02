@@ -9,7 +9,7 @@ const UserForm = () => {
   const [admin, setAdmin] = useState(false);
   const [descrizione, setDescrizione] = useState("");
   const [message, setMessage] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, _setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -40,8 +40,12 @@ const UserForm = () => {
         const data = await res.json();
         setMessage(data.message || "Errore durante la creazione dell'utente.");
       }
-    } catch (error: any) {
-      setMessage(error.message);
+    } catch (error: Error | unknown) {
+      if (error instanceof Error) {
+        setMessage(error.message);
+      } else {
+        setMessage("An unknown error occurred.");
+      }
     }
   };
 
