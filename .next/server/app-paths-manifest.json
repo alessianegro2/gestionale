@@ -1,0 +1,9 @@
+{
+  "/api/getAttivita/route": "app/api/getAttivita/route.js",
+  "/api/getTurniA/route": "app/api/getTurniA/route.js",
+  "/api/getIscritti/route": "app/api/getIscritti/route.js",
+  "/page": "app/page.js",
+  "/(dashboard)/home/page": "app/(dashboard)/home/page.js",
+  "/(auth)/login/page": "app/(auth)/login/page.js",
+  "/(dashboard)/iscritti/page": "app/(dashboard)/iscritti/page.js"
+}

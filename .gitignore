@@ -6,7 +6,6 @@ yarn-error.log*
 pnpm-lock.yaml
 
 # Next.js
-.next/
 out/
 .env.local
 .env.development.local
