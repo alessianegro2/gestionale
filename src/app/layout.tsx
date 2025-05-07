@@ -6,7 +6,7 @@ export default function DashboardLayout({
   children: React.ReactNode
 }) {
   return (
-      <div className='h-screen'>
+      <div className='w-full h-screen'>
         {children}
       </div>
 

@@ -25,7 +25,7 @@ export default async function DashboardLayout({
   }
 
   return (
-      <div className='h-screen flex'>
+      <div className='w-full flex'>
         {/*menù*/}
         <div className='w-[13%] md:w-[6%] lg:w-[13%] xl:w-[13%]'>
           <Menu></Menu>
