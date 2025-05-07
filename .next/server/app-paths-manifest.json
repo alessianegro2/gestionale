@@ -1,9 +1,25 @@
 {
+  "/_not-found/page": "app/_not-found/page.js",
   "/api/getAttivita/route": "app/api/getAttivita/route.js",
+  "/api/deleteAttivita/route": "app/api/deleteAttivita/route.js",
   "/api/getTurniA/route": "app/api/getTurniA/route.js",
+  "/api/deleteIscritto/route": "app/api/deleteIscritto/route.js",
   "/api/getIscritti/route": "app/api/getIscritti/route.js",
+  "/api/getUtente/route": "app/api/getUtente/route.js",
+  "/api/insertAttivita/route": "app/api/insertAttivita/route.js",
+  "/api/insertIscritto/route": "app/api/insertIscritto/route.js",
+  "/api/insertUser/route": "app/api/insertUser/route.js",
+  "/api/updateAttivita/route": "app/api/updateAttivita/route.js",
+  "/api/updateIscritto/route": "app/api/updateIscritto/route.js",
+  "/api/login/route": "app/api/login/route.js",
+  "/api/updatePassword/route": "app/api/updatePassword/route.js",
   "/page": "app/page.js",
-  "/(dashboard)/home/page": "app/(dashboard)/home/page.js",
-  "/(auth)/login/page": "app/(auth)/login/page.js",
-  "/(dashboard)/iscritti/page": "app/(dashboard)/iscritti/page.js"
+  "/(dashboard)/collaboratori/page": "app/(dashboard)/collaboratori/page.js",
+  "/(dashboard)/attivita/page": "app/(dashboard)/attivita/page.js",
+  "/(dashboard)/allenatori/page": "app/(dashboard)/allenatori/page.js",
+  "/(dashboard)/iscritti/page": "app/(dashboard)/iscritti/page.js",
+  "/(dashboard)/gruppi/page": "app/(dashboard)/gruppi/page.js",
+  "/(dashboard)/impostazioni/page": "app/(dashboard)/impostazioni/page.js",
+  "/(dashboard)/profilo/page": "app/(dashboard)/profilo/page.js",
+  "/(dashboard)/home/page": "app/(dashboard)/home/page.js"
 }
