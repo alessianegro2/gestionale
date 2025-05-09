@@ -70,7 +70,7 @@ const Attivita = () => {
   };
 
   return (
-    <div className="min-h-screen py-10 px-4 flex flex-col items-center relative">
+    <div className="min-h-screen py-10 px-4 flex flex-col items-center relative" style={{ width: '100%' }}>
       <h1 className="text-3xl font-semibold text-center mb-8 w-full">Attività</h1>
 
       <button
