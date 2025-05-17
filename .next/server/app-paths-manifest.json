@@ -1,6 +1,10 @@
 {
+  "/_not-found/page": "app/_not-found/page.js",
+  "/api/getIscritti/route": "app/api/getIscritti/route.js",
   "/api/getAttivita/route": "app/api/getAttivita/route.js",
   "/page": "app/page.js",
+  "/(dashboard)/impostazioni/page": "app/(dashboard)/impostazioni/page.js",
+  "/(dashboard)/home/page": "app/(dashboard)/home/page.js",
   "/(dashboard)/iscritti/page": "app/(dashboard)/iscritti/page.js",
-  "/(dashboard)/home/page": "app/(dashboard)/home/page.js"
+  "/(dashboard)/profilo/page": "app/(dashboard)/profilo/page.js"
 }

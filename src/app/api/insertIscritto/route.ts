@@ -12,13 +12,13 @@ export async function POST(req: Request) {
     const client = await clientPromise;
     const db = client.db("gestionale");
 
-    if(data == null){
-        return new Response(
-            JSON.stringify({ message: "Errore nell'inserimento dell'iscritto. " }),
-            { status: 400 } // 400 bad Request
-        );
+    if (!data) {
+      return new Response(
+        JSON.stringify({ message: "Errore nell'inserimento dell'iscritto." }),
+        { status: 400 }
+      );
     }
-    
+
     const newI = {
       nome: data.nome,
       cognome: data.cognome,
@@ -31,16 +31,19 @@ export async function POST(req: Request) {
       nazionalita: data.nazionalita,
       autorizzato_uscita: data.autorizzato_uscita,
       note: data.note,
-      genitore:{
-        nome: data.genitore.nome ,
-        cognome: data.genitore.cognome,
-        telefono: data.genitore.telefono,
-        email: data.genitore.email
+      genitore: {
+        nome: data.genitore?.nome_g ?? "",
+        cognome: data.genitore?.cognome_g ?? "",
+        telefono: data.genitore?.telefono_g ?? "",
+        email: data.genitore?.email_g ?? ""
       },
-      disabilita: data.disabilita,
-      privacy: data.privacy, 
-      trasporto: data.trasporto, 
-      pranzo: data.pranzo
+      disabilita: data.disabilita ?? false,
+      privacy: data.privacy ?? false,
+      trasporto: data.trasporto ?? false,
+      pranzo: data.pranzo ?? "",
+      turni: {
+        idT: Array.isArray(data.turni?.idT) ? data.turni.idT : []
+      }
     };
 
     await db.collection("iscritti").insertOne(newI);
@@ -49,7 +52,7 @@ export async function POST(req: Request) {
       JSON.stringify({ message: "Iscritto inserito con successo" }),
       { status: 200 }
     );
-  } catch (error: Error | unknown) {
+  } catch (error) {
     const errorMessage = error instanceof Error ? error.message : "Unknown error occurred";
     return new Response(
       JSON.stringify({ message: errorMessage }),

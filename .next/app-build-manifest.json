@@ -41,10 +41,60 @@
       "static/chunks/main-app.js",
       "static/chunks/app/api/getIscritti/route.js"
     ],
-    "/api/deleteAttivita/route": [
+    "/(dashboard)/impostazioni/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/api/deleteAttivita/route.js"
+      "static/chunks/app/(dashboard)/impostazioni/page.js"
+    ],
+    "/api/getUtenti/route": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/api/getUtenti/route.js"
+    ],
+    "/(dashboard)/profilo/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(dashboard)/profilo/page.js"
+    ],
+    "/api/getUtente/route": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/api/getUtente/route.js"
+    ],
+    "/api/getTurni/route": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/api/getTurni/route.js"
+    ],
+    "/api/insertIscritto/route": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/api/insertIscritto/route.js"
+    ],
+    "/api/deleteIscritto/route": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/api/deleteIscritto/route.js"
+    ],
+    "/(dashboard)/gruppi/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(dashboard)/gruppi/page.js"
+    ],
+    "/api/updateIscritto/route": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/api/updateIscritto/route.js"
+    ],
+    "/api/getIscrittiAttivita/route": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/api/getIscrittiAttivita/route.js"
+    ],
+    "/_not-found/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/_not-found/page.js"
     ]
   }
 }

@@ -5,31 +5,29 @@ import { useEffect, useState } from "react";
 
 type FormData={
   _id: string,
-    nome: string,
-    cognome: string,
-    sesso: string,
-    data_n: string,
-    luogo_n: string,
-    indirizzo:string,
-    citta: string,
-    cap: string,
-    nazionalita: string
-    data_iscrizione: string
-    autorizzato_uscita: string
-    note:string,
-    genitore: {
-      cognome:string,
-      nome: string,
-      telefono: number,
-      email:string
-    },
-    disabilita: boolean,
-    privacy: boolean,
-    trasporto: boolean,
-    pranzo: string,
-    turni: {
-      idT:string
-    }
+  nome: string,
+  cognome: string,
+  sesso: string,
+  data_n: string,
+  luogo_n: string,
+  indirizzo:string,
+  citta: string,
+  cap: string,
+  nazionalita: string,
+  data_iscrizione: string,
+  autorizzato_uscita: string,
+  note:string,
+  genitore: {
+    cognome_g:string,
+    nome_g: string,
+    telefono_g: number | string,
+    email_g:string
+  },
+  disabilita: boolean,
+  privacy: boolean,
+  trasporto: boolean,
+  pranzo: string,
+  turni:string[]
 }
 
 type Props = {
@@ -45,7 +43,9 @@ const formatToInputDate = (dateStr: string) => {
 
 const IscrittoForm = ({ onClose, defaultData }: Props) => {
   const [attivita, setAttivita] = useState<Array<{
+    turni: any;
     _id: string;
+    idA: string;
     nome: string;
     data_i: string;
     data_f: string;
@@ -54,12 +54,13 @@ const IscrittoForm = ({ onClose, defaultData }: Props) => {
   }>>([]);
   const [turni, setTurni] = useState<Array<{
     _id: string;
+    idT: string;
     idA: string;
     data_i: string;
     data_f: string;
-    costo: string;
+    n_turno: number;
   }>>([]);
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<FormData>({
     _id: "",
     nome: "",
     cognome: "",
@@ -74,18 +75,16 @@ const IscrittoForm = ({ onClose, defaultData }: Props) => {
     autorizzato_uscita: "",
     note: "",
     genitore: {
-      cognome: "",
-      nome:"",
-      telefono:"",
-      email:""
+      cognome_g: "",
+      nome_g: "",
+      telefono_g: "",
+      email_g: ""
     },
     disabilita: false,
     privacy: false,
     trasporto: false,
     pranzo: "",
-    turni: {
-      idT:""
-    }
+    turni: []
   });
 
   const [message, setMessage] = useState<string | null>(null);
@@ -93,7 +92,9 @@ const IscrittoForm = ({ onClose, defaultData }: Props) => {
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
+    console.log(defaultData)
     fetchAttivita();
+    fetchTurniA();
     if (defaultData) {
       setForm(prev => ({
         ...prev,
@@ -102,19 +103,31 @@ const IscrittoForm = ({ onClose, defaultData }: Props) => {
         data_iscrizione: formatToInputDate(defaultData.data_iscrizione),
         genitore: {
           ...defaultData.genitore,
-          telefono: defaultData.genitore.telefono.toString(),
+          telefono: defaultData.genitore.telefono_g,
         },
       }));
     }
   }, [defaultData]);
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value, type } = e.target as HTMLInputElement;
+    const { name, value, type } = e.target;
     const checked = (e.target as HTMLInputElement).checked;
-    setForm((prev) => ({
-      ...prev,
-      [name]: type === "checkbox" ? checked : value,
-    }));
+
+    setForm((prev) => {
+      const newForm = { ...prev };
+
+      if (name.includes("genitore.")) {
+        const field = name.split(".")[1];
+        newForm.genitore = {
+          ...prev.genitore,
+          [field]: value,
+        };
+      } else {
+        (newForm as any)[name] = type === "checkbox" ? checked : value;
+      }
+
+      return newForm;
+    });
   };
 
   const handleSubmit = async () => {
@@ -158,21 +171,18 @@ const IscrittoForm = ({ onClose, defaultData }: Props) => {
     }
   }
 
-  const fetchTurniA= async(_idA:string)=>{
+  const fetchTurniA= async()=>{
     try {
-      //console.log("fetch attività")
-      const res = await fetch(`/api/getTurniA`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(_idA),
-      });
-      const result = await res.json();
-      setTurni(result.data);
-
+      const res = await fetch(`/api/getTurni`);
+      const data = await res.json();
+      setTurni(data);
+      console.log(turni);
     } catch (err) {
-      console.error("Errore nell'eliminazione dell'iscritto:", err);
+      console.error("Errore nel recupero dei turni:", err);
     }
   }
+
+  
 
   return (
     <form className="w-[70%] mx-auto p-4 bg-white rounded-xl shadow-md grid grid-cols-1 gap-4 relative">
@@ -290,43 +300,55 @@ const IscrittoForm = ({ onClose, defaultData }: Props) => {
 
       <div>
         <label className="block text-sm font-medium mb-1">Cognome</label>
-        <input type="text" name="genitore_cognome" value={form.genitore.cognome} onChange={handleChange} required className="w-full px-4 py-2 border border-gray-300 rounded-xl" />
+        <input type="text" name="genitore.cognome_g" value={form.genitore.cognome_g || ""} onChange={handleChange} className="w-full px-4 py-2 border border-gray-300 rounded-xl" />
       </div>
 
       <div>
         <label className="block text-sm font-medium mb-1">Nome</label>
-        <input type="text" name="genitore_nome" value={form.genitore.nome} onChange={handleChange} required className="w-full px-4 py-2 border border-gray-300 rounded-xl" />
+        <input type="text" name="genitore.nome_g" value={form.genitore.nome_g || ""} onChange={handleChange}  className="w-full px-4 py-2 border border-gray-300 rounded-xl" />
       </div>
 
       <div>
         <label className="block text-sm font-medium mb-1">Telefono</label>
-        <input type="tel" name="genitore_telefono" value={form.genitore.telefono} onChange={handleChange} required className="w-full px-4 py-2 border border-gray-300 rounded-xl" />
+        <input type="tel" name="genitore.telefono_g" value={form.genitore.telefono_g || ""} onChange={handleChange}  className="w-full px-4 py-2 border border-gray-300 rounded-xl" />
       </div>
 
       <div>
         <label className="block text-sm font-medium mb-1">Email</label>
-        <input type="email" name="genitore_email" value={form.genitore.email} onChange={handleChange} className="w-full px-4 py-2 border border-gray-300 rounded-xl" />
+        <input type="email" name="genitore.email_g" value={form.genitore.email_g || ""} onChange={handleChange} className="w-full px-4 py-2 border border-gray-300 rounded-xl" />
       </div>
 
       {/*ATTIVITA'*/}
       <h3 className="font-bold text-xl text-center">Attività</h3>
-      {attivita.map((a) => (
-        <div key={a._id}>
-          <h4>{a.nome}</h4>
-          {turni.map((t) => (
-            <div key={t._id}>
-              <input
-                type="checkbox"
-                value={t._id}
-                checked={form.turni.idT === t._id}
-                onChange={handleChange}
-              />
-              <label>{t.data_i} - {t.data_f}</label>
-            </div>
-          ))}
-        </div>
-      ))}
-
+       <div>
+        {attivita.map((a) => (
+          <div key={a.idA}>
+            <h4>{a.nome}</h4>
+            {turni
+              .filter((t) => t.idA === a.idA)
+              .map((t) => (
+                <div key={t._id}>
+                  <label>
+                    <input
+                      type="checkbox"
+                      value={t.idT}
+                      checked={form.turni.includes(t.idT)}
+                      onChange={(e) => {
+                        setForm((prev) => {
+                          const newTurni = e.target.checked
+                            ? [...new Set([...prev.turni, t.idT])]
+                            : prev.turni.filter((id) => id !== t.idT);
+                          return { ...prev, turni: newTurni };
+                        });
+                      }}
+                    />
+                    dal {t.data_i} al {t.data_f} - {t.n_turno}
+                  </label>
+                </div>
+              ))}
+          </div>
+        ))}
+      </div>
 
       <div className="text-center mt-2 min-h-[20px]">
         {loading ? (

@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import AttivitaForm from "./AttivitaForm";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import IscrittoForm from "./IscrittoForm";
+import IscrittiPage from "@/app/(dashboard)/iscritti/page";
 
 type Attivita = {
   _id: string;
@@ -70,7 +72,7 @@ const Attivita = () => {
   };
 
   return (
-    <div className="min-h-screen py-10 px-4 flex flex-col items-center relative" style={{ width: '100%' }}>
+    <div className="py-10 px-4 flex flex-col items-center relative w-100 " >
       <h1 className="text-3xl font-semibold text-center mb-8 w-full">Attività</h1>
 
       <button
@@ -113,9 +115,10 @@ const Attivita = () => {
                 <div className="flex justify-start gap-2 mt-4">
                   <button
                     onClick={() => {
-                      router.push('/iscritti');
+                      router.push(`/iscritti`);
                     }}
-                    className="px-3 py-1 bg-[#465c9783] hover:bg-[#465c97c9] rounded-xl text-sm font-semibold text-white"
+                    className="px-3 py-1 rounded-xl text-sm font-semibold "
+                    style={{backgroundColor: "#465c9783"}}
                   >
                     Iscritti
                   </button>

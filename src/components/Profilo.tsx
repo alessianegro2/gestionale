@@ -64,8 +64,8 @@ const ProfiloUtente = () => {
   }, []);
 
   return (
-    <div className="min-h-screen py-14 px-6 flex flex-col items-center bg-gray-50">
-      <h1 className="text-4xl font-bold text-center mb-10 w-full">Profilo Utente</h1>
+    <div className="min-h-screen py-14 px-6 flex flex-col items-center w-screen" >
+      <h1 className="text-3xl font-semibold text-center mb-8 w-full">Profilo Utente</h1>
 
       {utente ? (
         <div className="w-full max-w-2xl bg-white p-10 shadow-2xl rounded-3xl flex flex-col items-center text-center text-lg">
@@ -76,7 +76,7 @@ const ProfiloUtente = () => {
               className="w-32 h-32 rounded-full mb-6 object-cover shadow-md"
             />
           ) : (
-            <UserCircle className="w-32 h-32 text-gray-400 mb-6" />
+            <UserCircle className="w-32 h-32 text-black mb-6" />
           )}
           <p className="text-2xl font-bold mb-2">{utente.username}</p>
           <p className="text-gray-700 mb-2 font-bold">{utente.admin ?" Amministratore" : " Utente standard"}</p>
@@ -102,7 +102,7 @@ const ProfiloUtente = () => {
 
           <button
             onClick={() => setEditPassword(true)}
-            className="mt-4 px-5 py-3 text-lg rounded-xl bg-[#fdeb90] hover:bg-[#fdea87] font-bold"
+            className="mt-4 px-5 py-3 text-lg rounded-xl  bg-red-500 hover:bg-red-600 font-bold"
           >
             Cambia Password
           </button>
@@ -123,14 +123,14 @@ const ProfiloUtente = () => {
                 <input
                   type="password"
                   placeholder="Nuova password"
-                  className="w-full px-4 py-3 mb-3 border rounded-xl text-base"
+                  className="w-full px-4 py-3 mb-3 border rounded-xl text-base "
                   value={nuovaPassword}
                   onChange={(e) => setNuovaPassword(e.target.value)}
                 />
                 <input
                   type="password"
                   placeholder="Conferma password"
-                  className="w-full px-4 py-3 mb-4 border rounded-xl text-base"
+                  className="w-full px-4 py-3 mb-4 border rounded-xl text-base "
                   value={confermaPassword}
                   onChange={(e) => setConfermaPassword(e.target.value)}
                 />
@@ -151,7 +151,7 @@ const ProfiloUtente = () => {
                 </button>
                 <button
                   onClick={aggiornaPassword}
-                  className="px-4 py-2 rounded-xl bg-[#fdeb90] hover:bg-[#fdea87] text-black text-sm font-semibold"
+                  className="px-4 py-2 rounded-xl bg-green-400 hover:bg-green-600 text-black text-sm font-semibold"
                 >
                   Conferma
                 </button>

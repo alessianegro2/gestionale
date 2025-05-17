@@ -36,15 +36,16 @@ export async function POST(req: Request) {
           autorizzato_uscita: data.autorizzato_uscita,
           note: data.note,
           genitore:{
-            nome: data.genitore.nome ,
-            cognome: data.genitore.cognome,
-            telefono: data.genitore.telefono,
-            email: data.genitore.email
+            nome_g: data.genitore.nome_g ,
+            cognome_g: data.genitore.cognome_g,
+            telefono_g: data.genitore.telefono_g,
+            email_g: data.genitore.email_g
           },
           disabilita: data.disabilita,
           privacy: data.privacy, 
           trasporto: data.trasporto, 
-          pranzo: data.pranzo
+          pranzo: data.pranzo,
+          turni: data.turni
         },
       }
     );

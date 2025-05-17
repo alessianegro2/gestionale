@@ -26,7 +26,7 @@ export async function POST(req: Request) {
 
     if (updated.modifiedCount === 0) {
       return new Response(
-        JSON.stringify({ message: "Errore nella modifica dell'attività. Verifica che il codice dell'attività esista." }),
+        JSON.stringify({ message: "Errore nella modifica dell'attività. Verifica che il codice dell'attività esista" }),
         { status: 404 }
       );
     }

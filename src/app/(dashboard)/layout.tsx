@@ -14,28 +14,28 @@ export default async function DashboardLayout({
 
   if (!token) {
     console.log("token non esistente");
-    redirect("/login");
+    redirect("/");
   }
 
   try {
     verifyToken(token); 
   } catch (e) {
     console.log(e);
-    redirect("/login");
+    redirect("/");
   }
 
   return (
       <div className='w-full flex' >
         {/*menù*/}
-        <div className='w-[13%] md:w-[6%] lg:w-[13%] xl:w-[13%]'>
+        <div style={{width: '13%'}}>
           <Menu></Menu>
         </div>
 
         {/*navbar*/}
-        <div className='w-[87%] md:w-[94%] lg:w-[87%] xl:w-[87%]  bg-[#F7F8Fa] overflow-scroll'>
+        <div className='bg-[#F7F8Fa] overflow-y-scroll' style={{width: '87%'}}>
             <Navbar></Navbar>
           {/*varie pagine dashboard*/}
-          <div className='w-full p-4'>
+          <div className='p-4'>
             {children} 
           </div>
         </div>

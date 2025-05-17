@@ -22,18 +22,16 @@ type IscrittoData={
     autorizzato_uscita: string
     note:string,
     genitore: {
-      cognome:string,
-      nome: string,
-      telefono: number,
-      email:string
+      cognome_g:string,
+      nome_g: string,
+      telefono_g: number,
+      email_g:string
     },
     disabilita: boolean,
     privacy: boolean,
     trasporto: boolean,
     pranzo: string,
-    turni: {
-      idT:string
-    }
+    turni: string[]
 }
 
 type Props = {
@@ -52,29 +50,42 @@ const TableIscritti = () => {
   const [selectedUser, setSelectedUser] = useState<IscrittoData | null>(null);
   const [showForm, setShowForm] = useState(false);
   const [_insertIscr, setInsertIscr] = useState(false);
+  const [idAtt, setIdAtt] = useState<string | null>(null);
+  const [attivita, setAttivita] = useState<Array<{
+    turni: any;
+    _id: string;
+    idA: string;
+    nome: string;
+    data_i: string;
+    data_f: string;
+    n_settimane: string;
+    costo_settimana: string;
+  }>>([]);
 
 
   const pageSize = 20;
 
   useEffect(() => { 
+    setIdAtt("");
     fetchUsers(); //richiamo subito la funzione per caricare gli utenti
+    fetchAttivita(); 
   }, []);
 
   const fetchUsers = async () => {
-    try {
-      const res = await fetch(`/api/getIscritti`); 
-      const data = await res.json();
-      setUsers(data.users);
+      try {
+        const res = await fetch(`/api/getIscritti`); 
+        const data = await res.json();
+        setUsers(data.users);
 
-      if (data.users.length > 0) {
-        const allFields = Object.keys(data.users[0]).filter(
-          (key) => key !== '_id' && key !== 'genitore' && key!== 'gruppo'  && key != "cap" && key != "data_iscrizione" //rimossi dalla table
-        );
-        setFields([...allFields]);
+        if (data.users.length > 0) {
+          const allFields = Object.keys(data.users[0]).filter(
+            (key) => key !== '_id' && key !== 'genitore' && key!== 'gruppo'  && key != "cap" && key != "data_iscrizione" && key != "turni" //rimossi dalla table
+          );
+          setFields([...allFields]);
+        }
+      } catch (err) {
+        console.error('Errore nel caricamento utenti:', err);
       }
-    } catch (err) {
-      console.error('Errore nel caricamento utenti:', err);
-    }
   };
 
   const sortedAndFiltered = useMemo(() => {
@@ -112,6 +123,17 @@ const TableIscritti = () => {
     }
   };
 
+  const fetchAttivita= async()=>{
+    try {
+      const res = await fetch(`/api/getAttivita`);
+      const data = await res.json();
+      setAttivita(data);
+      console.log("attivita: " + data)
+    } catch (err) {
+      console.error("Errore nel recupero delle attività", err);
+    }
+  }
+
   const deleteUser = async (_id: string)=>{
     try {
       const res = await fetch(`/api/deleteIscritto`, {
@@ -141,36 +163,51 @@ const TableIscritti = () => {
   return (
     <>
     {showForm ? (
-          <>
-            {selectedUser ? (
-              <>
-                <IscrittoForm defaultData={selectedUser} onClose={() =>{ setShowForm(false); setSelectedUser(null); fetchUsers()}} />
-                  </>
-            ): (
-              <>
+        <>
+          {selectedUser ? (
+            <>
+              <div className='w-container'>
+                <IscrittoForm
+                  defaultData={{
+                    ...selectedUser,
+                    turni: selectedUser.turni ?? [],
+                  }}
+                  onClose={() => {
+                    setShowForm(false);
+                    setSelectedUser(null);
+                    fetchUsers();
+                  }}
+                />
+              </div>
+            </>
+          ): (
+            <>
+              <div className='w-convtainer'>
                 <IscrittoForm onClose={() =>{ setShowForm(false);  setInsertIscr(false); fetchUsers()}} />
-              </>
-            )}
-          </>            
+              </div>
+            </>
+          )} 
+        </>          
         ) : ( 
         <>
-        <div className='mt-10 mb-10' >
-          <button
-            onClick={() => {
-              setSelectedUser(null);
-              setShowForm(true);
-              setInsertIscr(true);
-            }}
-            className="absolute top-6 right-6 bg-[#fdeb90] hover:bg-[#fdea87] text-black font-bold rounded-full w-12 h-12 text-2xl flex items-center justify-center shadow-md transition m-10"
-            title="Aggiungi iscritto"
-          >
-            +
-          </button>
-        </div>
+        <div className='w-container'>
+          <div className='mt-10 mb-10' >
+            <button
+              onClick={() => {
+                setSelectedUser(null);
+                setShowForm(true);
+                setInsertIscr(true);
+              }}
+              className="absolute top-6 right-6 bg-[#fdeb90] hover:bg-[#fdea87] text-black font-bold rounded-full w-12 h-12 text-2xl flex items-center justify-center shadow-md transition m-10"
+              title="Aggiungi iscritto"
+            >
+              +
+            </button>
+          </div>
                  
-          <Card className="p-4 shadow-xl rounded-2xl border border-gray-300 mt-10">
+          <Card className="p-4 shadow-xl rounded-2xl border border-gray-300 mt-10 ">
             <CardContent>
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center justify-between mb-4 ">
               <h1 className="text-xl font-bold text-black">ISCRITTI</h1>
               <Input
                 type="text"
@@ -183,6 +220,17 @@ const TableIscritti = () => {
                 className="max-w-sm"
               />
             </div>
+            {/*<div className='felx w-container m-2'>
+              <select name="selectAtt" id="selectAtt" onChange={(e) => {
+                setIdAtt(e.target.value);
+                fetchUsers();
+              }}>
+                <option value="">Tutte le attività</option>
+                {attivita.map((a) => (
+                  <option value={a.idA}>{a.nome}</option>
+                ))}
+              </select>
+            </div>*/}
   
             <div className="overflow-x-auto">
               <table className="min-w-full border-blue-900 border-rounded-lg">
@@ -226,14 +274,14 @@ const TableIscritti = () => {
                           Documenti
                         </Button>
                       </td>*/}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-      </CardContent>
-    </Card> 
-    </>
+                    </tr>))}
+                    </tbody>
+                  </table>
+                </div>
+          </CardContent>
+          </Card> 
+          </div>
+        </>
   )} 
    </>
   );

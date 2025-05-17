@@ -9,6 +9,7 @@ import {
   Settings,
   LogOut,
   PartyPopper,
+  Workflow
 } from 'lucide-react'  /* icone, lucide.dev/icons */
 
 
@@ -32,7 +33,7 @@ const MenuItems = [
             href: '/attivita'
         },
         {
-            icon: Users,
+            icon: Workflow,
             label: 'Collaboratori',
             href: '/collaboratori'
         },
@@ -50,21 +51,21 @@ const MenuItems = [
             href: '/profilo'
         },
         {
-            icon: Settings,
-            label: 'Impostazioni',
+            icon: Users,
+            label: 'Utenti',
             href: '/impostazioni'
         },
         {
             icon: LogOut,
             label: 'Logout',
-            href: '/login'
+            href: '/'
         }]
     }
 ]
 
 const Menu = () => {
     return (
-        <div className="h-full w-full bg-[#465c97d8]  text-sm text-white px-2 pt-6">
+        <div className="h-full w-full bg-[#465c97d8]  text-sm text-black px-2 pt-6">
           {/* LOGO */}
           <div className="flex justify-center mb-8 border-b-white border-b-2 pb-4">
             <Image
@@ -84,7 +85,7 @@ const Menu = () => {
                     href={item.href}
                     className="flex items-center md:justify-start justify-center gap-0 md:gap-4 px-4 py-3 rounded-md hover:bg-[#f8ecad63] transition"
                   >
-                    <item.icon className="w-7 h-7 text-white" />
+                    <item.icon className="w-7 h-7 text-black" />
                     <span className="hidden lg:inline text-lg">{item.label}</span>
                   </Link>
                 ))}
