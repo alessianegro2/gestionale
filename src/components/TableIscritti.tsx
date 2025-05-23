@@ -50,7 +50,7 @@ const TableIscritti = () => {
   const [selectedUser, setSelectedUser] = useState<IscrittoData | null>(null);
   const [showForm, setShowForm] = useState(false);
   const [_insertIscr, setInsertIscr] = useState(false);
-  const [idAtt, setIdAtt] = useState<string | null>(null);
+  const [idAtt, setIdAtt] = useState("all");
   const [attivita, setAttivita] = useState<Array<{
     turni: any;
     _id: string;
@@ -65,28 +65,46 @@ const TableIscritti = () => {
 
   const pageSize = 20;
 
-  useEffect(() => { 
-    setIdAtt("");
-    fetchUsers(); //richiamo subito la funzione per caricare gli utenti
-    fetchAttivita(); 
-  }, []);
-
-  const fetchUsers = async () => {
+  useEffect(() => {
+    fetchAttivita();
+    const fetchUsers = async () => {
       try {
-        const res = await fetch(`/api/getIscritti`); 
-        const data = await res.json();
-        setUsers(data.users);
-
-        if (data.users.length > 0) {
-          const allFields = Object.keys(data.users[0]).filter(
-            (key) => key !== '_id' && key !== 'genitore' && key!== 'gruppo'  && key != "cap" && key != "data_iscrizione" && key != "turni" //rimossi dalla table
-          );
-          setFields([...allFields]);
+        console.log("idAtt: " + idAtt);
+        if (idAtt !== "all" && idAtt !== "") {
+          const res = await fetch(`/api/getIscrittiAttivita`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ idAttivita: idAtt })
+          });
+          const data = await res.json();
+          setUsers(data.iscritti);
+          if (data.iscritti.length > 0) {
+            const allFields = Object.keys(data.iscritti[0]).filter(
+              (key) => key !== '_id' && key !== 'genitore' && key!== 'gruppo'  && key != "cap" && key != "data_iscrizione" && key != "turni"
+            );
+            setFields([...allFields]);
+          }
+        } else {
+          const res = await fetch(`/api/getIscritti`);
+          const data = await res.json();
+          setUsers(data.iscritti);
+          if (data.iscritti.length > 0) {
+            const allFields = Object.keys(data.iscritti[0]).filter(
+              (key) => key !== '_id' && key !== 'genitore' && key!== 'gruppo'  && key != "cap" && key != "data_iscrizione" && key != "turni"
+            );
+            setFields([...allFields]);
+          }
         }
       } catch (err) {
+        alert('Errore nel caricamento degli utenti: ' + err);
         console.error('Errore nel caricamento utenti:', err);
       }
-  };
+    };
+
+    fetchUsers();
+  }, [idAtt]);
+
+  
 
   const sortedAndFiltered = useMemo(() => {
     let data = [...users]; 
@@ -127,8 +145,8 @@ const TableIscritti = () => {
     try {
       const res = await fetch(`/api/getAttivita`);
       const data = await res.json();
-      setAttivita(data);
-      console.log("attivita: " + data)
+      setAttivita(data.attivita);
+      console.log("attivita: " + data.attivita);
     } catch (err) {
       console.error("Errore nel recupero delle attività", err);
     }
@@ -142,8 +160,7 @@ const TableIscritti = () => {
         body: JSON.stringify(_id),
       });
       const result = await res.json();
-
-      fetchUsers(); 
+      setIdAtt("");
       alert(result.message);
 
     } catch (err) {
@@ -175,7 +192,7 @@ const TableIscritti = () => {
                   onClose={() => {
                     setShowForm(false);
                     setSelectedUser(null);
-                    fetchUsers();
+                    setIdAtt("");
                   }}
                 />
               </div>
@@ -183,7 +200,7 @@ const TableIscritti = () => {
           ): (
             <>
               <div className='w-convtainer'>
-                <IscrittoForm onClose={() =>{ setShowForm(false);  setInsertIscr(false); fetchUsers()}} />
+                <IscrittoForm onClose={() =>{ setShowForm(false);  setInsertIscr(false); setIdAtt("");}} />
               </div>
             </>
           )} 
@@ -220,17 +237,16 @@ const TableIscritti = () => {
                 className="max-w-sm"
               />
             </div>
-            {/*<div className='felx w-container m-2'>
+            <div className='felx w-container m-2'>
               <select name="selectAtt" id="selectAtt" onChange={(e) => {
                 setIdAtt(e.target.value);
-                fetchUsers();
               }}>
-                <option value="">Tutte le attività</option>
+                <option key="all" value="all">Tutte le attività</option>
                 {attivita.map((a) => (
-                  <option value={a.idA}>{a.nome}</option>
+                  <option key={a.idA} value={a.idA}>{a.nome}</option>
                 ))}
               </select>
-            </div>*/}
+            </div>
   
             <div className="overflow-x-auto">
               <table className="min-w-full border-blue-900 border-rounded-lg">

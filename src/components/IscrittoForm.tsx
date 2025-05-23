@@ -164,8 +164,8 @@ const IscrittoForm = ({ onClose, defaultData }: Props) => {
     try {
       const res = await fetch(`/api/getAttivita`);
       const data = await res.json();
-      setAttivita(data);
-      console.log("attivita: " + data)
+      setAttivita(data.attivita);
+      console.log("attivita: " + data.attivita)
     } catch (err) {
       console.error("Errore nel recupero delle attività", err);
     }

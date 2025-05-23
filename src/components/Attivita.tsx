@@ -30,7 +30,7 @@ const Attivita = () => {
     try {
       const res = await fetch(`/api/getAttivita`);
       const data = await res.json();
-      setAttivita(data);
+      setAttivita(data.attivita);
     } catch (err) {
       console.error("Errore nel recupero delle attività", err);
     }

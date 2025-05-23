@@ -8,9 +8,12 @@ export async function GET(_request: Request) {
 
     const data = await db.collection('attivita').find({}).toArray();
     //console.log(data)
-    return NextResponse.json( data );
+    return new Response(
+      JSON.stringify({ message: "Attivita ottenute con successo", attivita: data }),
+      { status: 200 }
+    );
   } catch (error) {
-    console.error('Errore nella query MongoDB:', error);
+    console.error('Errore nella query MongoDB delle attività:', error);
     return NextResponse.json({ users: [], total: 0 }, { status: 500 });
   }
 }

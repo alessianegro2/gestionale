@@ -13,38 +13,17 @@ export async function POST(req: Request) {
       );
     }
 
-    const result = await db.collection("iscritti").aggregate([
-    {
-        $lookup: {
-        from: "turni",
-        localField: "idT",
-        foreignField: "idT",
-        as: "turniInfo"
-        }
-    },
-    {
-        $unwind: "$turniInfo"
-    },
-    {
-        $lookup: {
-        from: "attivita",
-        localField: "turniInfo.idA",
-        foreignField: "idA",
-        as: "attivitaInfo"
-        }
-    },
-    {
-        $unwind: "$attivitaInfo"
-    },
-    {
-        $match: {
-        "attivitaInfo.idA": data
-        }
-    }
-    ]).toArray();
-    console.log(result);
+    // 1. Prendo tutti i turni relativi a quell'attività
+    const turni = await db.collection("turni").find({ idA: data.idAttivita }).toArray();
+    const idsTurni = turni.map(turno => turno.idT);
+
+    // 2. Prendo tutti gli iscritti che hanno uno di quei turni
+    const iscritti = await db.collection("iscritti").find({ turni:{ $in: idsTurni } }).toArray();
+
+    console.log(iscritti);
+
     return new Response(
-      JSON.stringify({ message: "Iscritti ottenuti con successo", users: result }),
+      JSON.stringify({ message: "Iscritti ottenuti con successo", iscritti: iscritti }),
       { status: 200 }
     );
   } catch (error) {
