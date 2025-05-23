@@ -7,8 +7,11 @@ export async function GET(req: Request) {
     const db = client.db("gestionale"); 
 
     const data = await db.collection('turni').find({}).toArray();
-    console.log(data)
-    return NextResponse.json( data );
+    
+    return new Response(
+      JSON.stringify({ message: "Turni ottenuti con successo", turni: data }),
+      { status: 200 }
+    );
   } catch (error) {
     console.error('Errore nella query MongoDB:', error);
     return NextResponse.json({ users: [], total: 0 }, { status: 500 });

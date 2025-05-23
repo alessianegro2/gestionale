@@ -175,7 +175,7 @@ const IscrittoForm = ({ onClose, defaultData }: Props) => {
     try {
       const res = await fetch(`/api/getTurni`);
       const data = await res.json();
-      setTurni(data);
+      setTurni(data.turni);
       console.log(turni);
     } catch (err) {
       console.error("Errore nel recupero dei turni:", err);
