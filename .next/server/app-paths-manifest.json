@@ -1,9 +1,4 @@
 {
-  "/api/getAttivita/route": "app/api/getAttivita/route.js",
-  "/api/insertIscritto/route": "app/api/insertIscritto/route.js",
-  "/api/getTurni/route": "app/api/getTurni/route.js",
-  "/api/getIscrittiAttivita/route": "app/api/getIscrittiAttivita/route.js",
-  "/api/getIscritti/route": "app/api/getIscritti/route.js",
   "/page": "app/page.js",
   "/(dashboard)/home/page": "app/(dashboard)/home/page.js",
   "/(dashboard)/iscritti/page": "app/(dashboard)/iscritti/page.js"

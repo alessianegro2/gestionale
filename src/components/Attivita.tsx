@@ -113,7 +113,7 @@ const Attivita = () => {
 
               <div className="grid grid-cols-2">
                 <div className="flex justify-start gap-2 mt-4">
-                  <button
+                  {/*<button
                     onClick={() => {
                       router.push(`/iscritti`);
                     }}
@@ -121,7 +121,7 @@ const Attivita = () => {
                     style={{backgroundColor: "#465c9783"}}
                   >
                     Iscritti
-                  </button>
+                  </button>*/}
                   
                 </div>
                 <div className="flex justify-end gap-2 mt-4" >
