@@ -103,8 +103,9 @@ const IscrittoForm = ({ onClose, defaultData }: Props) => {
         data_iscrizione: formatToInputDate(defaultData.data_iscrizione),
         genitore: {
           ...defaultData.genitore,
-          telefono: defaultData.genitore.telefono_g,
+          telefono_g: defaultData.genitore.telefono_g,
         },
+        turni: Array.isArray(defaultData.turni) ? defaultData.turni : [],
       }));
     }
   }, [defaultData]);
@@ -325,7 +326,7 @@ const IscrittoForm = ({ onClose, defaultData }: Props) => {
           <div key={a.idA}>
             <h4>{a.nome}</h4>
             {turni
-              .filter((t) => t.idA === a.idA)
+              .filter((tu) => tu.idA === a.idA)
               .map((t) => (
                 <div key={t._id}>
                   <label>
