@@ -1,5 +1,4 @@
-"use client";
-
+"use client"
 import React, { useState, useEffect } from "react";
 import { Loader2 } from "lucide-react";
 import { Button } from "./ui/button";
@@ -12,12 +11,22 @@ type User = {
   admin: boolean;
 };
 
-const UserManagement = () => { 
+type Props = {
+  user: any; 
+};
+
+const UserManagement = ({user}: Props) => { 
   const [utenti, setUtenti] = useState<User[]>([]);
   const [showForm, setShowForm] = useState(false);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [message, setMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [form, setForm] = useState({
+    username: "",
+    password: "",
+    descrizione: "",
+    admin: false,
+  });
 
   const fetchUtenti = async () => {
     setMessage(null);
@@ -34,8 +43,13 @@ const UserManagement = () => {
   };
 
   useEffect(() => {
-    setMessage(null);
-    fetchUtenti();
+    console.log(user);
+    if(!user || !user.admin) {
+      setMessage("Accesso non autorizzato. Solo gli amministratori possono visualizzare e gestire gli utenti.");      
+    }else{
+      setMessage(null);
+      fetchUtenti();
+    }
   }, []);
 
   const handleDelete = async (id:any) => {
@@ -56,7 +70,8 @@ const UserManagement = () => {
     e.preventDefault();
     setLoading(true);
 
-    const payload = selectedUser ? {...selectedUser } : { username: "", password: "", admin: false, descrizione: "" };
+    const payload = selectedUser ? {...selectedUser } : {...form} ;
+    console.log("payload", payload);
 
     try {
       if(selectedUser){
@@ -95,6 +110,13 @@ const UserManagement = () => {
     } finally {
       setLoading(false);
     }
+
+    setForm({
+      username: "",
+      password: "",
+      descrizione: "",
+      admin: false,
+    });
   };
   
   const handleChange = (
@@ -106,11 +128,18 @@ const UserManagement = () => {
       type === "checkbox"
         ? (e.target as HTMLInputElement).checked
         : value;
-
-    setSelectedUser((prev) => ({
-      ...prev!,
-      [name]: newValue,
-    }));
+    if (selectedUser) {
+      setSelectedUser((prev) => ({
+        ...prev!,
+        [name]: newValue,
+      }));
+    }
+    else{
+      setForm((prev) => ({
+        ...prev!,
+        [name]: newValue,
+      }));
+    }
   };
 
 
@@ -124,11 +153,11 @@ const UserManagement = () => {
       {showForm ? (
         <div className="w-full max-w-md bg-white shadow-xl rounded-2xl p-8">
           <form className="space-y-5">
-            <input type="text" name="username" placeholder="Username" value={selectedUser?.username || ""} onChange={handleChange } required className="w-full p-2 border rounded" />
-            <input type="password" name="password" placeholder="Password" value={""} onChange={handleChange}  className="w-full p-2 border rounded" />
-            <textarea placeholder="Descrizione" name="descrizione" value={selectedUser?.descrizione || ""} onChange={handleChange} className="w-full p-2 border rounded"></textarea>
+            <input type="text" name="username" placeholder="Username" value={selectedUser?.username || form.username} onChange={handleChange } required className="w-full p-2 border rounded" />
+            <input type="password" name="password" placeholder="Password" value={selectedUser ? "" : form.password} onChange={handleChange}  className="w-full p-2 border rounded" />
+            <textarea placeholder="Descrizione" name="descrizione" value={selectedUser?.descrizione || form.descrizione} onChange={handleChange} className="w-full p-2 border rounded"></textarea>
             <label>
-              <input type="checkbox" name="admin" checked={selectedUser?.admin || false} onChange={handleChange} /> Admin
+              <input type="checkbox" name="admin" checked={selectedUser?.admin || form.admin} onChange={handleChange} /> Admin
             </label>
             <div className="grid grid-cols-2">
               <div className=" flex justify-start w-full">

@@ -3,9 +3,9 @@ import { ObjectId } from "mongodb";
 
 export async function POST(req: Request) {
   try {
-    const { id } = await req.json();
+    const { id, idA } = await req.json();
     console.log(id)
-    if (!id) {
+    if (!id ) {
       return new Response(
         JSON.stringify({ message: "ID mancante nella richiesta." }),
         { status: 400 }
@@ -14,6 +14,8 @@ export async function POST(req: Request) {
 
     const client = await clientPromise;
     const db = client.db("gestionale");
+
+    // Elimina l'attività
     const result = await db.collection("attivita").deleteOne({ _id: new ObjectId(id) });
 
     if (result.deletedCount === 0) {
@@ -23,8 +25,11 @@ export async function POST(req: Request) {
       );
     }
 
+    // Elimina tutti i turni collegati a quell'attività
+    await db.collection("turni").deleteMany({ idA: idA });
+
     return new Response(
-      JSON.stringify({ message: "Attività eliminata con successo." }),
+      JSON.stringify({ message: "Attività e turni associati eliminati con successo." }),
       { status: 200 }
     );
   } catch (error: Error | unknown) {

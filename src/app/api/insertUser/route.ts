@@ -1,9 +1,10 @@
 import bcrypt from "bcrypt";
 import clientPromise from "../../../../lib/mongodb";
+import { ObjectId } from "mongodb";
 
 export async function POST(req: Request) {
   try {
-    const { username, password, admin, descrizione } = await req.json();
+    const { username, password, descrizione, admin } = await req.json();
     const client = await clientPromise;
     const db = client.db("gestionale");
 
@@ -19,14 +20,7 @@ export async function POST(req: Request) {
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-    const newUser = {
-      username,
-      password: hashedPassword,
-      admin,
-      descrizione
-    };
-
-    await db.collection("users").insertOne(newUser);
+    await db.collection("users").insertOne({_id: new ObjectId, username, hashedPassword, descrizione, admin});
 
     return new Response(
       JSON.stringify({ message: "Registrazione avvenuta con successo" }),

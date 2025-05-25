@@ -9,6 +9,7 @@ import IscrittiPage from "@/app/(dashboard)/iscritti/page";
 
 type Attivita = {
   _id: string;
+  idA: string;
   nome: string;
   data_i: string;
   data_f: string;
@@ -49,7 +50,7 @@ const Attivita = () => {
     try {
       const res = await fetch(`/api/deleteAttivita`, {
         method: "POST",
-        body: JSON.stringify({ id: attivitaDaEliminare._id }),
+        body: JSON.stringify({ id: attivitaDaEliminare._id, idA: attivitaDaEliminare.idA }),
       });
 
       const data = await res.json();
@@ -113,15 +114,15 @@ const Attivita = () => {
 
               <div className="grid grid-cols-2">
                 <div className="flex justify-start gap-2 mt-4">
-                  {/*<button
+                  <button
                     onClick={() => {
-                      router.push(`/iscritti`);
+                      router.push(`/turni`);
                     }}
                     className="px-3 py-1 rounded-xl text-sm font-semibold "
                     style={{backgroundColor: "#465c9783"}}
                   >
-                    Iscritti
-                  </button>*/}
+                    Turni
+                  </button>
                   
                 </div>
                 <div className="flex justify-end gap-2 mt-4" >

@@ -5,6 +5,8 @@ import { useState, useEffect } from "react";
 
 
 type AttivitaData = {
+  _id: string;
+  idA: string;
   nome: string;
   data_i: string;
   data_f: string;
@@ -26,25 +28,44 @@ const formatToInputDate = (dateStr: string) => {
 
 const AttivitaForm = ({ onClose, defaultData }: Props) => {
   const [form, setForm] = useState({
+    idA: defaultData ? defaultData.idA : "",
     nome: "",
     data_i: "",
     data_f: "",
     costo_settimana: 0,
     n_settimane: 0,
   });
+  const [attivita, setAttivita] = useState<AttivitaData[]>([]);
 
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
 
+
+  const fetchAttivita = async () => {
+    try {
+      const res = await fetch(`/api/getAttivita`);
+      const data = await res.json();
+      setAttivita(data.attivita);
+    } catch (err) {
+      console.error("Errore nel recupero delle attività", err);
+    }
+    console.log("Attività recuperate:", attivita);
+  };
+
+  useEffect(() => {
+    fetchAttivita();
+  }, []);
+
   useEffect(() => {
     if (defaultData) {
       setForm({
-        nome: defaultData.nome || "",
+        idA: defaultData.idA,
+        nome: defaultData.nome,
         data_i: formatToInputDate(defaultData.data_i),
         data_f: formatToInputDate(defaultData.data_f),
-        costo_settimana: defaultData.costo_settimana || 0,
-        n_settimane: defaultData.n_settimane || 0
+        costo_settimana: defaultData.costo_settimana,
+        n_settimane: defaultData.n_settimane 
       });
     }
   }, [defaultData]);
@@ -63,10 +84,17 @@ const AttivitaForm = ({ onClose, defaultData }: Props) => {
     try {
       const endpoint = defaultData ? "/api/updateAttivita" : "/api/insertAttivita";
 
+      // costruisco i dati da inviare alla fetch
+      const formToSend = defaultData
+        ? form
+        : { ...form, idA: (parseInt(attivita[attivita.length -1].idA) + 1).toString()  };
+
+      console.log(formToSend)
+      
       const res = await fetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify(formToSend),
       });
 
       const result = await res.json();

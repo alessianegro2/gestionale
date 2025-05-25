@@ -15,7 +15,7 @@ export async function POST(req: Request) {
   }
   else{
     const isValid = await bcrypt.compare(password, user.password);
-    console.log(isValid, user.password, password);
+    //console.log(isValid, user.password, password);
     if(!isValid) {
       return new Response(JSON.stringify({ message: "Password errata" }), { status: 401 });
     }
@@ -25,11 +25,11 @@ export async function POST(req: Request) {
       (await cookies()).set("token", token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        maxAge: 60 * 60, //scade dopo un'ora di inattività
+        maxAge: 60 * 60, //scade dopo un'ora
         path: "/",
       });
   
-      return new Response(JSON.stringify({ success: true }));
+      return new Response(JSON.stringify({ success: true }),{headers: { "Content-Type": "application/json" }});
     }
   }
   

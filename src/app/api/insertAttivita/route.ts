@@ -2,11 +2,11 @@ import clientPromise from "../../../../lib/mongodb";
 
 export async function POST(req: Request) {
   try {
-    const { attivita, nome, data_i, data_f, n_settimane, costo_settimana } = await req.json();
+    const { idA, nome, data_i, data_f, n_settimane, costo_settimana } = await req.json();
     const client = await clientPromise;
     const db = client.db("gestionale");
 
-    if(attivita == null){
+    if(!idA){
         return new Response(
             JSON.stringify({ message: "Inserire un codice dell'attività!" }),
             { status: 400 } // 400 bad Request
@@ -14,7 +14,7 @@ export async function POST(req: Request) {
     }
 
     // Controllo se esiste già 
-    const existingUser = await db.collection("attivita").findOne({ attivita });
+    const existingUser = await db.collection("attivita").findOne({ idA });
     if (existingUser) {
       return new Response(
         JSON.stringify({ message: "Codice attività già esistente" }),
@@ -29,7 +29,7 @@ export async function POST(req: Request) {
     };
 
     const newA = {
-      attivita,
+      idA,
       nome,
       data_i: convertDateFormat(data_i),
       data_f: convertDateFormat(data_f),

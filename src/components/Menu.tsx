@@ -6,6 +6,7 @@ import {
   ListOrdered,
   Group,
   User,
+  CalendarDays,
   Settings,
   LogOut,
   PartyPopper,
@@ -41,6 +42,11 @@ const MenuItems = [
             icon: Group,
             label: 'Gruppi',
             href: '/gruppi'
+        },
+        {
+            icon: CalendarDays,
+            label: 'Turni',
+            href: '/turni'
         }]
     },
     {
@@ -53,7 +59,7 @@ const MenuItems = [
         {
             icon: Users,
             label: 'Utenti',
-            href: '/impostazioni'
+            href: '/user-management'
         },
         {
             icon: LogOut,
