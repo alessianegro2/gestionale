@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { Loader2 } from "lucide-react";
 import { Button } from "./ui/button";
+import { set } from "react-hook-form";
 
 type User = {
   _id: string;
@@ -26,7 +27,10 @@ const UserManagement = ({user}: Props) => {
     password: "",
     descrizione: "",
     admin: false,
-  });
+  });  
+  const [userDaEliminare, setUserDaEliminare] = useState<User | null>(null);
+  const [loadingDelete, setLoadingDelete] = useState(false);
+  const [deleteMessage, setDeleteMessage] = useState<string | null>(null);
 
   const fetchUtenti = async () => {
     setMessage(null);
@@ -53,15 +57,30 @@ const UserManagement = ({user}: Props) => {
   }, []);
 
   const handleDelete = async (id:any) => {
+    if (!userDaEliminare) return;
     setMessage(null);
     try {
-      const res = await fetch("/api/deleteUser", {
+      setLoadingDelete(true);
+      setDeleteMessage(null);
+
+      const res = await fetch("/api/deleteUtente", {
         method: "POST",
         body: JSON.stringify({ id }),
       });
-      if (res.ok) fetchUtenti();
-      else setMessage("Errore durante l'eliminazione.");
+
+      const data = await res.json();
+      if (res.ok) {
+        setDeleteMessage("Utente eliminato con successo.");
+        setTimeout(() => {
+          setLoadingDelete(false);
+          setUserDaEliminare(null);
+          fetchUtenti();
+        }, 1000);
+      }
+      else 
+        setDeleteMessage(data.message || "Errore durante l'eliminazione.");
     } catch (err) {
+      setDeleteMessage("Errore imprevisto durante l'eliminazione.");  
       console.error("Errore durante l'eliminazione", err);
     }
   };
@@ -70,7 +89,13 @@ const UserManagement = ({user}: Props) => {
     e.preventDefault();
     setLoading(true);
 
-    const payload = selectedUser ? {...selectedUser } : {...form} ;
+    const payload = selectedUser
+    ? {
+        ...selectedUser,
+        ...(form.password && { password: form.password }) // Solo se c'è una nuova password
+      }
+    : { ...form };
+
     console.log("payload", payload);
 
     try {
@@ -120,7 +145,7 @@ const UserManagement = ({user}: Props) => {
   };
   
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value, type } = e.target;
 
@@ -128,20 +153,12 @@ const UserManagement = ({user}: Props) => {
       type === "checkbox"
         ? (e.target as HTMLInputElement).checked
         : value;
-    if (selectedUser) {
-      setSelectedUser((prev) => ({
-        ...prev!,
-        [name]: newValue,
-      }));
-    }
-    else{
-      setForm((prev) => ({
-        ...prev!,
-        [name]: newValue,
-      }));
-    }
-  };
 
+    setForm((prev) => ({
+      ...prev,
+      [name]: newValue,
+    }));
+  };
 
 
   return (
@@ -153,11 +170,19 @@ const UserManagement = ({user}: Props) => {
       {showForm ? (
         <div className="w-full max-w-md bg-white shadow-xl rounded-2xl p-8">
           <form className="space-y-5">
-            <input type="text" name="username" placeholder="Username" value={selectedUser?.username || form.username} onChange={handleChange } required className="w-full p-2 border rounded" />
-            <input type="password" name="password" placeholder="Password" value={selectedUser ? "" : form.password} onChange={handleChange}  className="w-full p-2 border rounded" />
-            <textarea placeholder="Descrizione" name="descrizione" value={selectedUser?.descrizione || form.descrizione} onChange={handleChange} className="w-full p-2 border rounded"></textarea>
+            <input type="text" name="username" placeholder="Username" value={form.username} onChange={handleChange } required className="w-full p-2 border rounded" />
+            {/*<p>Password inserita: {form.password}</p>*/}
+            <input
+              type="password"
+              name="password"
+              placeholder="Nuova Password"
+              value={form.password}
+              onChange={handleChange}
+              className="w-full p-2 border rounded"
+            />
+            <textarea placeholder="Descrizione" name="descrizione" value={form.descrizione} onChange={handleChange} className="w-full p-2 border rounded"></textarea>
             <label>
-              <input type="checkbox" name="admin" checked={selectedUser?.admin || form.admin} onChange={handleChange} /> Admin
+              <input type="checkbox" name="admin" checked={form.admin} onChange={handleChange} /> Admin
             </label>
             <div className="grid grid-cols-2">
               <div className=" flex justify-start w-full">
@@ -186,9 +211,17 @@ const UserManagement = ({user}: Props) => {
                 <td className="p-3">{utente.admin ? "Sì" : "No"}</td>
                 <td className="p-3">{utente.descrizione}</td>
                 <td className="p-3 flex">
-                  <Button onClick={() => {setSelectedUser({ ...utente }); setShowForm(true);}} className="text-black m-1 font-semibold rounded-xl text-sm cursor-pointer">Modifica</Button>
+                  <Button onClick={() => {setForm({
+                      username: utente.username,
+                      password: "",
+                      descrizione: utente.descrizione,
+                      admin: utente.admin,
+                    }); 
+                    setSelectedUser({ ...utente }); 
+                    setShowForm(true);}}
+                    className="text-black m-1 font-semibold rounded-xl text-sm cursor-pointer">Modifica</Button>
 
-                  <Button onClick={() => handleDelete(utente._id)} className="bg-red-400 hover:bg-red-600 font-semibold rounded-xl text-sm cursor-pointer">Elimina</Button>
+                  <Button onClick={() => setUserDaEliminare(utente)} className="bg-red-400 hover:bg-red-600 font-semibold rounded-xl text-sm cursor-pointer">Elimina</Button>
                 </td>
               </tr>
             ))}
@@ -197,6 +230,56 @@ const UserManagement = ({user}: Props) => {
       )}
 
       {message && <p className="text-sm text-center text-black mt-4">{message}</p>}
+
+      {userDaEliminare && (
+              <>
+                <style>{`body { overflow: hidden; }`}</style>
+      
+                <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 pointer-events-auto"></div>
+      
+                <div className="fixed inset-0 flex items-center justify-center z-50">
+                  <div className="bg-white p-6 rounded-xl shadow-lg w-full max-w-sm">
+                    <h2 className="text-lg font-bold mb-4 text-center">Conferma Eliminazione</h2>
+                    <p className="text-center text-gray-700 mb-4">
+                      Sei sicuro di voler eliminare questo utente?
+                    </p>
+      
+                    
+                    {loadingDelete ? (
+                      <div className="flex justify-center">
+                      <Loader2 className="animate-spin h-5 w-5" />
+                    </div>
+                    ) : deleteMessage ? (
+                      <p className="text-center text-sm text-gray-700 mb-4">{deleteMessage}</p>
+                    ) : null}
+      
+                    <div className="flex justify-between">
+                      <button
+                        disabled={loadingDelete}
+                        onClick={() => {
+                          setUserDaEliminare(null);
+                          setDeleteMessage(null);
+                          document.body.style.overflow = "auto";
+                        }}
+                        className="px-4 py-2 rounded-xl bg-gray-300 hover:bg-gray-400 text-sm"
+                      >
+                        Annulla
+                      </button>
+                      <button
+                        disabled={loadingDelete}
+                        onClick={() => {
+                          handleDelete(userDaEliminare!._id);
+                          document.body.style.overflow = "auto";
+                        }}
+                        className="px-4 py-2 rounded-xl bg-red-500 hover:bg-red-600 text-white text-sm font-semibold"
+                      >
+                        Elimina
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </>
+            )}
     </div>
   );
 };

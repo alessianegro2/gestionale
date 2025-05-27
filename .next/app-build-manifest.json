@@ -6,16 +6,6 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
-    "/(dashboard)/layout": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(dashboard)/layout.js"
-    ],
-    "/(dashboard)/home/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(dashboard)/home/page.js"
-    ],
     "/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
@@ -26,20 +16,20 @@
       "static/chunks/main-app.js",
       "static/chunks/app/api/login/route.js"
     ],
+    "/(dashboard)/layout": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(dashboard)/layout.js"
+    ],
+    "/(dashboard)/home/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(dashboard)/home/page.js"
+    ],
     "/api/getAttivita/route": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/api/getAttivita/route.js"
-    ],
-    "/(dashboard)/turni/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(dashboard)/turni/page.js"
-    ],
-    "/api/getTurni/route": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/api/getTurni/route.js"
     ],
     "/(dashboard)/profilo/page": [
       "static/chunks/webpack.js",
@@ -51,60 +41,15 @@
       "static/chunks/main-app.js",
       "static/chunks/app/api/getUtente/route.js"
     ],
-    "/api/insertAttivita/route": [
+    "/(dashboard)/iscritti/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/api/insertAttivita/route.js"
+      "static/chunks/app/(dashboard)/iscritti/page.js"
     ],
-    "/api/deleteAttivita/route": [
+    "/api/getIscritti/route": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/api/deleteAttivita/route.js"
-    ],
-    "/api/insertTurno/route": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/api/insertTurno/route.js"
-    ],
-    "/(dashboard)/attivita/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(dashboard)/attivita/page.js"
-    ],
-    "/api/deleteTurno/route": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/api/deleteTurno/route.js"
-    ],
-    "/api/updateTurno/route": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/api/updateTurno/route.js"
-    ],
-    "/(dashboard)/collaboratori/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(dashboard)/collaboratori/page.js"
-    ],
-    "/api/getUtenti/route": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/api/getUtenti/route.js"
-    ],
-    "/api/updateUser/route": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/api/updateUser/route.js"
-    ],
-    "/(dashboard)/user-management/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(dashboard)/user-management/page.js"
-    ],
-    "/api/insertUser/route": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/api/insertUser/route.js"
+      "static/chunks/app/api/getIscritti/route.js"
     ]
   }
 }

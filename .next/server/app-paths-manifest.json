@@ -1,9 +1,9 @@
 {
-  "/api/login/route": "app/api/login/route.js",
-  "/api/getUtenti/route": "app/api/getUtenti/route.js",
-  "/api/updateUser/route": "app/api/updateUser/route.js",
+  "/api/getAttivita/route": "app/api/getAttivita/route.js",
+  "/api/getIscritti/route": "app/api/getIscritti/route.js",
+  "/api/getUtente/route": "app/api/getUtente/route.js",
   "/page": "app/page.js",
+  "/(dashboard)/home/page": "app/(dashboard)/home/page.js",
   "/(dashboard)/profilo/page": "app/(dashboard)/profilo/page.js",
-  "/(dashboard)/user-management/page": "app/(dashboard)/user-management/page.js",
-  "/(dashboard)/home/page": "app/(dashboard)/home/page.js"
+  "/(dashboard)/iscritti/page": "app/(dashboard)/iscritti/page.js"
 }

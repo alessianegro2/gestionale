@@ -34,6 +34,11 @@ const MenuItems = [
             href: '/attivita'
         },
         {
+            icon: CalendarDays,
+            label: 'Turni',
+            href: '/turni'
+        },
+        {
             icon: Workflow,
             label: 'Collaboratori',
             href: '/collaboratori'
@@ -42,11 +47,6 @@ const MenuItems = [
             icon: Group,
             label: 'Gruppi',
             href: '/gruppi'
-        },
-        {
-            icon: CalendarDays,
-            label: 'Turni',
-            href: '/turni'
         }]
     },
     {
@@ -71,7 +71,7 @@ const MenuItems = [
 
 const Menu = () => {
     return (
-        <div className="h-full w-full bg-[#465c97d8]  text-sm text-black px-2 pt-6">
+        <div className="h-full w-full text-sm text-black px-2 pt-6">
           {/* LOGO */}
           <div className="flex justify-center mb-8 border-b-white border-b-2 pb-4">
             <Image
@@ -89,9 +89,9 @@ const Menu = () => {
                   <Link
                     key={item.label}
                     href={item.href}
-                    className="flex items-center md:justify-start justify-center gap-0 md:gap-4 px-4 py-3 rounded-md hover:bg-[#f8ecad63] transition"
+                    className="flex items-center md:justify-start justify-center gap-0 md:gap-4 px-4 py-3 rounded-md transition"
                   >
-                    <item.icon className="w-7 h-7 text-black" />
+                    <item.icon className="w-7 h-7 text-black " />
                     <span className="hidden lg:inline text-lg">{item.label}</span>
                   </Link>
                 ))}

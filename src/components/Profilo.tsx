@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { Eye, EyeOff, UserCircle } from "lucide-react";
 import Image from "next/image"
+import {Button} from "./ui/button";
 
 type Utente = {
   _id: string;
@@ -64,21 +65,21 @@ const ProfiloUtente = () => {
   }, []);
 
   return (
-    <div className="min-h-screen py-14 px-6 flex flex-col items-center w-screen" >
+    <div className="h-full py-14 px-6 flex flex-col items-center w-full" >
       <h1 className="text-3xl font-semibold text-center mb-8 w-full">Profilo Utente</h1>
 
       {utente ? (
-        <div className="w-full max-w-2xl bg-white p-10 shadow-2xl rounded-3xl flex flex-col items-center text-center text-lg">
+        <div className="w-full max-w-xl bg-white p-10 shadow-xl rounded-xl flex flex-col items-center text-center text-md">
           {utente.immagine ? (
             <Image
               src={`data:image/png;base64,${utente.immagine}`} 
               alt="Immagine profilo"
-              className="w-32 h-32 rounded-full mb-6 object-cover shadow-md"
+              className="w-24 h-24 rounded-full mb-6 object-cover shadow-md"
             />
           ) : (
-            <UserCircle className="w-32 h-32 text-black mb-6" />
+            <UserCircle className="w-24 h-24 text-black mb-6" />
           )}
-          <p className="text-2xl font-bold mb-2">{utente.username}</p>
+          <p className="text-xl font-bold mb-2">{utente.username}</p>
           <p className="text-gray-700 mb-2 font-bold">{utente.admin ?" Amministratore" : " Utente standard"}</p>
           <p className="text-gray-600 italic mb-6">Note: {utente.descrizione}</p>
 
@@ -91,21 +92,21 @@ const ProfiloUtente = () => {
                 readOnly
                 className="w-full px-4 py-3 border rounded-xl bg-gray-100 text-gray-600 text-sm"
               />
-              <button
+              <Button
                 onClick={() => setMostraPassword(!mostraPassword)}
-                className="absolute right-4 top-3 text-gray-500 hover:text-black"
+                className="absolute right-2 top-2 text-gray-500 hover:text-black"
               >
                 {mostraPassword ? <EyeOff /> : <Eye />}
-              </button>
+              </Button>
             </div>
           </div>
 
-          <button
+          <Button
             onClick={() => setEditPassword(true)}
-            className="mt-4 px-5 py-3 text-lg rounded-xl  bg-red-500 hover:bg-red-600 font-bold"
+            className="mt-4 px-5 py-3 text-sm rounded-xl  bg-red-500 hover:bg-red-600"
           >
             Cambia Password
-          </button>
+          </Button>
         </div>
       ) : (
         <p className="text-xl text-gray-600">Caricamento profilo...</p>
@@ -143,18 +144,18 @@ const ProfiloUtente = () => {
               </div>
 
               <div className="flex justify-between mt-4">
-                <button
+                <Button
                   onClick={() => setEditPassword(false)}
                   className="px-4 py-2 rounded-xl bg-gray-300 hover:bg-gray-400 text-sm"
                 >
                   Annulla
-                </button>
-                <button
+                </Button>
+                <Button
                   onClick={aggiornaPassword}
                   className="px-4 py-2 rounded-xl bg-green-400 hover:bg-green-600 text-black text-sm font-semibold"
                 >
                   Conferma
-                </button>
+                </Button>
               </div>
             </div>
           </div>
