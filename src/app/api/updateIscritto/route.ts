@@ -45,6 +45,9 @@ export async function POST(req: Request) {
           privacy: data.privacy, 
           trasporto: data.trasporto, 
           pranzo: data.pranzo,
+          da_pagare: data.da_pagare,
+          pagato: data.pagato,
+          tipo_pagamento: data.tipo_pagamento,
           turni: data.turni
         },
       }

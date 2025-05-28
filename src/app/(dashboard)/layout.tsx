@@ -24,7 +24,7 @@ export default async function DashboardLayout({
     redirect("/");
   }
 
-  return (
+  return ( 
       <div className='w-full flex' >
         {/*menù*/}
         <div style={{width: '13%'}}>

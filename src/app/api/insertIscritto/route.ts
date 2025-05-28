@@ -41,9 +41,10 @@ export async function POST(req: Request) {
       privacy: data.privacy ?? false,
       trasporto: data.trasporto ?? false,
       pranzo: data.pranzo ?? "",
-      turni: {
-        idT: Array.isArray(data.turni?.idT) ? data.turni.idT : []
-      }
+      da_pagare: data.da_pagare ?? 0,
+      pagato: data.pagato ?? 0,
+      tipo_pagamento: data.tipo_pagamento ?? "",
+      turni: Array.isArray(data.turni)? data.turni : []
     };
 
     await db.collection("iscritti").insertOne(newI);

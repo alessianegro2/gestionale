@@ -27,6 +27,9 @@ type FormData={
   privacy: boolean,
   trasporto: boolean,
   pranzo: string,
+  da_pagare: number,
+  pagato: number,
+  tipo_pagamento: string,
   turni:string[]
 }
 
@@ -84,6 +87,9 @@ const IscrittoForm = ({ onClose, defaultData }: Props) => {
     privacy: false,
     trasporto: false,
     pranzo: "",
+    da_pagare: 0,
+    pagato: 0,
+    tipo_pagamento: "",
     turni: []
   });
 
@@ -250,6 +256,14 @@ const IscrittoForm = ({ onClose, defaultData }: Props) => {
         <input type="text" name="nazionalita" value={form.nazionalita} onChange={handleChange} required className="w-full px-4 py-2 border border-gray-300 rounded-xl" />
       </div>
 
+       <div>
+        <label className="block text-sm font-medium mb-3">Pranzo</label>
+        <select name="pranzo" value={form.pranzo} onChange={handleChange} className="w-full px-4 py-2 border border-gray-300 rounded-xl">
+          <option value="sacco">Al sacco</option>
+          <option value="mensa">In mensa</option>
+          <option value="casa">A casa</option>
+        </select>
+      </div>
       {/*<div>
         <label className="block text-sm font-medium mb-1">Data Iscrizione</label>
         {defaultData ? (
@@ -258,15 +272,6 @@ const IscrittoForm = ({ onClose, defaultData }: Props) => {
           <input type="date" name="data_iscrizione" value={form.data_iscrizione} className="w-full px-4 py-2 border border-gray-300 rounded-xl bg-gray-100" />
         )}
       </div>*/}
-
-      <div>
-        <label className="block text-sm font-medium mb-1">Autorizzato all'Uscita</label>
-        <select name="autorizzato_uscita" value={form.autorizzato_uscita} onChange={handleChange} className="w-full px-4 py-2 border border-gray-300 rounded-xl">
-          <option value=" ">Seleziona</option>
-          <option value="Si">Si</option>
-          <option value="No">No</option>
-        </select>
-      </div>
 
       <div className="flex items-center gap-2">
         <input type="checkbox" name="disabilita" checked={form.disabilita} onChange={handleChange} />
@@ -284,18 +289,39 @@ const IscrittoForm = ({ onClose, defaultData }: Props) => {
       </div>
 
       <div>
-        <label className="block text-sm font-medium mb-1">Pranzo</label>
-        <div className="flex gap-4">
-          <label><input type="radio" name="pranzo" value="sacco" checked={form.pranzo === "sacco"} onChange={handleChange} /> Al sacco</label>
-          <label><input type="radio" name="pranzo" value="mensa" checked={form.pranzo === "mensa"} onChange={handleChange} /> Mensa</label>
-          <label><input type="radio" name="pranzo" value="casa" checked={form.pranzo === "casa"} onChange={handleChange} /> A casa</label>
-        </div>
+        <label className="block text-sm font-medium mb-1">Autorizzato all'Uscita</label>
+        <select name="autorizzato_uscita" value={form.autorizzato_uscita} onChange={handleChange} className="w-full px-4 py-2 border border-gray-300 rounded-xl">
+          <option value=" ">Seleziona</option>
+          <option value="Si">Si</option>
+          <option value="No">No</option>
+        </select>
       </div>
 
       <div>
-        <label className="block text-sm font-medium mb-1">Note</label>
+        <label className="block text-sm font-medium mb-3">Note</label>
         <input type="text" name="note" value={form.note} onChange={handleChange} className="w-full px-4 py-2 border border-gray-300 rounded-xl" />
       </div>
+
+      <div>
+        <label className="block text-sm font-medium mb-1 mt-3">Quota da pagare</label>
+        <input type="number" min={0} name="da_pagare" value={form.da_pagare} onChange={handleChange} className="w-full px-4 py-2 border border-gray-300 rounded-xl" />
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium mb-1">Già pagato</label>
+        <input type="number" min={0} name="pagato" value={form.pagato} onChange={handleChange} className="w-full px-4 py-2 border border-gray-300 rounded-xl" />
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium mb-3">Tipo di pagamento</label>
+        <select name="tipo_pagamento" value={form.tipo_pagamento} onChange={handleChange} className="w-full px-4 py-2 border border-gray-300 rounded-xl">
+          <option value="bonifico">Bonifico</option>
+          <option value="contanti">Contanti</option>
+          <option value="satispay">Satispay</option>
+        </select>
+      </div>
+
+      
         {/*GENITORE*/}
       <h3 className="font-bold text-xl text-center">Genitore</h3>
 
