@@ -42,12 +42,13 @@ const MenuItems = [
             icon: Workflow,
             label: 'Collaboratori',
             href: '/collaboratori'
-        },
+        },/*},
         {
             icon: Group,
             label: 'Gruppi',
             href: '/gruppi'
-        }]
+        }*/
+      ]
     },
     {
         title: 'Others',

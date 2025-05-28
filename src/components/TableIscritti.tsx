@@ -31,6 +31,9 @@ type IscrittoData={
     privacy: boolean,
     trasporto: boolean,
     pranzo: string,
+    da_pagare: number,
+    pagato: number,
+    tipo_pagamento: string,
     turni: string[]
 }
 
@@ -80,7 +83,7 @@ const TableIscritti = () => {
           setUsers(data.iscritti);
           if (data.iscritti.length > 0) {
             const allFields = Object.keys(data.iscritti[0]).filter(
-              (key) => key !== '_id' && key !== 'genitore' && key!== 'gruppo'  && key != "cap" && key != "data_iscrizione" && key != "turni"
+              (key) => key !== '_id' && key !== 'luogo_n' && key !== 'indirizzo' && key !== 'cap' && key !== 'genitore' && key !== 'genitore' && key!== 'gruppo'  && key != "cap" && key != "data_iscrizione" && key != "turni"
             );
             setFields([...allFields]);
           }
@@ -90,11 +93,13 @@ const TableIscritti = () => {
           setUsers(data.iscritti);
           if (data.iscritti.length > 0) {
             const allFields = Object.keys(data.iscritti[0]).filter(
-              (key) => key !== '_id' && key !== 'genitore' && key!== 'gruppo'  && key != "cap" && key != "data_iscrizione" && key != "turni"
+              (key) => key !== '_id' && key !== 'luogo_n' && key !== 'indirizzo' && key !== 'cap' && key !== 'genitore' && key !== 'genitore' && key!== 'gruppo'  && key != "cap" && key != "data_iscrizione" && key != "turni"
             );
             setFields([...allFields]);
           }
         }
+        
+        
       } catch (err) {
         alert('Errore nel caricamento degli utenti: ' + err);
         console.error('Errore nel caricamento utenti:', err);
@@ -188,6 +193,9 @@ const TableIscritti = () => {
                   defaultData={{
                     ...selectedUser,
                     turni: selectedUser.turni ?? [],
+                    da_pagare: selectedUser.da_pagare ?? 0,
+                    pagato: selectedUser.pagato ?? 0,
+                    tipo_pagamento: selectedUser.tipo_pagamento ?? "",
                   }}
                   onClose={() => {
                     setShowForm(false);
