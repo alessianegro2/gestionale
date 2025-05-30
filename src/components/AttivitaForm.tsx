@@ -2,6 +2,8 @@
 
 import { Loader2 } from "lucide-react";
 import { useState, useEffect } from "react";
+import { refreshToken } from "../../lib/jwt";
+import { cookies } from "next/headers";
 
 
 type AttivitaData = {
@@ -103,6 +105,7 @@ const AttivitaForm = ({ onClose, defaultData }: Props) => {
       if (res.ok) {
         setMessage(result.message || "Attività salvata con successo!");
         setError(false);
+        
         setTimeout(() => {
           onClose();
         }, 1000);
