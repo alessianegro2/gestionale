@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ChevronUp, ChevronDown } from 'lucide-react';
 import IscrittoForm from './IscrittoForm';
+import * as XLSX from 'xlsx';
 
 type IscrittoData={
   _id: string,
@@ -157,6 +158,40 @@ const TableIscritti = () => {
     }
   }
 
+  const handleExport = async () => {
+    if (!Array.isArray(users)) {
+      alert('Errore nel recupero dei dati.');
+      return;
+    }
+
+// Mappatura nel formato richiesto
+    const mappedData = users.map((item, index) => {
+      const nascita = new Date(item.data_n);
+
+      return {
+        'NUMERO': index + 1,
+        'COGNOME': item.cognome,
+        'NOME': item.nome,
+        'data nascita': item.data_n,
+        'GG':  item.data_n.split('/')[0], 
+        'MESE' : item.data_n.split('/')[1],
+        'ANNO':  item.data_n.split('/')[2],
+        'Luogo': item.luogo_n,
+        'PAGATO IN cifre': item.pagato,
+        'PAGATO IN lettere': "",
+        'SQUADRA': ""
+      };
+    });
+
+    // Crea Excel
+    const worksheet = XLSX.utils.json_to_sheet(mappedData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Iscritti');
+
+    // Scarica il file
+    XLSX.writeFile(workbook, 'iscritti.xlsx');
+  }
+
   const deleteUser = async (_id: string)=>{
     try {
       const res = await fetch(`/api/deleteIscritto`, {
@@ -207,7 +242,7 @@ const TableIscritti = () => {
             </>
           ): (
             <>
-              <div className='w-convtainer'>
+              <div className='justify-center m-3' style={{width: "60%", margin: "0 auto"}}>
                 <IscrittoForm onClose={() =>{ setShowForm(false);  setInsertIscr(false); setIdAtt("");}} />
               </div>
             </>
@@ -255,6 +290,10 @@ const TableIscritti = () => {
                 ))}
               </select>
             </div>
+
+            <div className='felx w-container m-2'>
+              <button className='px-3 py-1 rounded-xl text-sm font-semibold cursor-pointer text-white' style={{backgroundColor: "#465c9783"}} onClick={handleExport}>Esporta tutti</button>
+            </div>
   
             <div className="overflow-x-auto">
               <table className="min-w-full border-blue-900 border-rounded-lg">
@@ -284,16 +323,17 @@ const TableIscritti = () => {
                         ) : null
                       ))}
                       <td className="px-4 py-2">
-                        <Button onClick={() => {setShowForm(true); setSelectedUser(user);}} className='odd:bg-[#f7e690] cursor-pointer'>
+                        <button onClick={() => {setShowForm(true); setSelectedUser(user);}} className='px-3 py-1 rounded-xl font-semibold cursor-pointer  hover:bg-gray-200 text-sm'>
                           Modifica
-                        </Button>
+                        </button>
                       </td>
                       <td className="px-4 py-2">
-                        <Button onClick={() => { deleteUser(user._id);}} className='bg-red-700 cursor-pointer text-white'>
+                        <button onClick={() => { deleteUser(user._id);}} className='px-3 py-1 rounded-xl text-sm font-semibold cursor-pointer bg-red-500 hover:bg-red-600 text-white'>
                           Elimina
-                        </Button>
+                        </button>
                       </td>
-                      {/*<td className="px-4 py-2">
+                      {/* DA IMPLEMENTARE POI
+                      <td className="px-4 py-2">
                         <Button onClick={() => alert(`Visualizza doc ${user._id}`)} className= 'bg-[#465c979a]'>
                           Documenti
                         </Button>

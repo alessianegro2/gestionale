@@ -2,6 +2,7 @@
 
 import { Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
+import { Card } from "./ui/card";
 
 type FormData={
   _id: string,
@@ -192,6 +193,7 @@ const IscrittoForm = ({ onClose, defaultData }: Props) => {
   
 
   return (
+  
     <form className="w-[70%] mx-auto p-4 bg-white rounded-xl shadow-md grid grid-cols-1 gap-4 relative">
       <h3 className="font-bold  text-xl text-center ">Iscritto</h3>
       {defaultData && (
@@ -391,13 +393,13 @@ const IscrittoForm = ({ onClose, defaultData }: Props) => {
 
       <div className="grid grid-cols-2">
         <div className=" flex justify-start w-full">
-          <button type="button" onClick={onClose} className="px-4 py-2 bg-gray-300 hover:bg-gray-400 rounded-xl text-sm cursor-pointer">
+          <button type="button" onClick={onClose} className="px-3 py-1 rounded-xl text-sm font-semibold cursor-pointer bg-gray-200 hover:bg-gray-400">
             Annulla
           </button>
         </div>
 
         <div className=" flex justify-end w-full">
-          <button type="button" onClick={handleSubmit} disabled={loading} className="px-4 py-2 bg-[#fdeb90] hover:bg-[#fdea87] text-black font-semibold rounded-xl text-sm cursor-pointer">
+          <button type="button" onClick={handleSubmit} disabled={loading} className="px-3 py-1 rounded-xl text-sm font-semibold cursor-pointer hover:bg-gray-200">
             Salva
           </button>
         </div>

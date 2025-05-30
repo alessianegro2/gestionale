@@ -146,8 +146,8 @@ const Turni = () => {
                                 <td>{t.data_i}</td>
                                 <td>{t.data_f}</td>
                                 {/*<td>{a.costo_settimana} €</td>*/}
-                                <td><Button onClick={() => {setShowForm(true); setSelectedT(t);}}  className='cursor-pointer'>Modifica</Button></td>
-                                <td><Button onClick={() => { setTurnoDaEliminare(t);}}  className='bg-red-700 cursor-pointer text-white'>Elimina</Button></td>
+                                <td><button onClick={() => {setShowForm(true); setSelectedT(t);}}  className='px-3 py-1 rounded-xl text-sm font-semibold  hover:bg-gray-200 cursor-pointer'>Modifica</button></td>
+                                <td><button onClick={() => { setTurnoDaEliminare(t);}}  className='px-3 py-1 bg-red-400 hover:bg-red-500 rounded-xl text-sm font-semibold text-white cursor-pointer'>Elimina</button></td>
                             </tr>
                         ) : null
                       ))}
@@ -191,7 +191,7 @@ const Turni = () => {
                     setDeleteMessage(null);
                     document.body.style.overflow = "auto";
                   }}
-                  className="px-4 py-2 rounded-xl bg-gray-300 hover:bg-gray-400 text-sm"
+                  className="px-3 py-1 rounded-xl font-semibold cursor-pointer bg-gray-300 hover:bg-gray-400 text-sm"
                 >
                   Annulla
                 </button>
@@ -201,7 +201,7 @@ const Turni = () => {
                     confermaEliminazione();
                     document.body.style.overflow = "auto";
                   }}
-                  className="px-4 py-2 rounded-xl bg-red-500 hover:bg-red-600 text-white text-sm font-semibold"
+                  className="px-3 py-1 rounded-xl text-sm font-semibold cursor-pointer bg-red-500 hover:bg-red-600 text-white "
                 >
                   Elimina
                 </button>

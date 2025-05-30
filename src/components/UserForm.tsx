@@ -186,22 +186,24 @@ const UserManagement = ({user}: Props) => {
             </label>
             <div className="grid grid-cols-2">
               <div className=" flex justify-start w-full">
-                <Button onClick={() => setShowForm(false)} className=" bg-gray-400 hover:bg-gray-500 py-2 text-black font-semibold rounded-xl text-sm cursor-pointer ">Annulla</Button>
+                <button onClick={() => setShowForm(false)} className="px-3 py-1 rounded-xl text-sm font-semibold cursor-pointer bg-gray-200 hover:bg-gray-400">Annulla</button>
               </div>
 
               <div className=" flex justify-end w-full">
-                <Button onClick={handleSubmit} className="bg-[#fdeb90] py-2 text-black font-semibold rounded-xl text-sm cursor-pointer hover:bg-gray-200">{loading ? <Loader2 className="animate-spin h-5 w-5" /> : "Salva"}</Button>
+                <button onClick={handleSubmit} className="px-3 py-1 rounded-xl text-sm font-semibold cursor-pointer hover:bg-gray-200">{loading ? <Loader2 className="animate-spin h-5 w-5" /> : "Salva"}</button>
               </div>
             </div>
           </form>
         </div>
       ) : (
-        <table className=" bg-white shadow-md rounded-xl" style={{ width: "50%" }}>
+        <table className=" bg-white shadow-md rounded-xl p-3" >
           <thead className="bg-[#fdeb90]">
             <tr className="text-left">
               <th className="p-3">Username</th>
               <th className="p-3">Admin</th>
               <th className="p-3">Descrizione</th>
+              <th></th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -211,7 +213,7 @@ const UserManagement = ({user}: Props) => {
                 <td className="p-3">{utente.admin ? "Sì" : "No"}</td>
                 <td className="p-3">{utente.descrizione}</td>
                 <td className="p-3 flex">
-                  <Button onClick={() => {setForm({
+                  <button onClick={() => {setForm({
                       username: utente.username,
                       password: "",
                       descrizione: utente.descrizione,
@@ -219,9 +221,10 @@ const UserManagement = ({user}: Props) => {
                     }); 
                     setSelectedUser({ ...utente }); 
                     setShowForm(true);}}
-                    className="text-black m-1 font-semibold rounded-xl text-sm cursor-pointer">Modifica</Button>
-
-                  <Button onClick={() => setUserDaEliminare(utente)} className="bg-red-400 hover:bg-red-600 font-semibold rounded-xl text-sm cursor-pointer">Elimina</Button>
+                    className="px-3 py-1 rounded-xl text-sm font-semibold cursor-pointer hover:bg-gray-200 ">Modifica</button>                  
+                </td>
+                <td>
+                  <button onClick={() => setUserDaEliminare(utente)} className="px-3 py-1 rounded-xl text-sm font-semibold cursor-pointer bg-red-500 hover:bg-red-600 text-white mr-2">Elimina</button>
                 </td>
               </tr>
             ))}

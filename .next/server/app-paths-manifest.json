@@ -1,11 +1,8 @@
 {
-  "/api/logout/route": "app/api/logout/route.js",
-  "/_not-found/page": "app/_not-found/page.js",
-  "/api/login/route": "app/api/login/route.js",
   "/api/getAttivita/route": "app/api/getAttivita/route.js",
+  "/api/getIscritti/route": "app/api/getIscritti/route.js",
+  "/api/getTurni/route": "app/api/getTurni/route.js",
   "/page": "app/page.js",
-  "/(dashboard)/collaboratori/page": "app/(dashboard)/collaboratori/page.js",
-  "/(dashboard)/user-management/page": "app/(dashboard)/user-management/page.js",
   "/(dashboard)/home/page": "app/(dashboard)/home/page.js",
-  "/(dashboard)/profilo/page": "app/(dashboard)/profilo/page.js"
+  "/(dashboard)/iscritti/page": "app/(dashboard)/iscritti/page.js"
 }

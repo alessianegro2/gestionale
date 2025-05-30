@@ -217,7 +217,7 @@ const TurniForm = ({ onClose, defaultData }: Props) => {
         <button
         type="button"
         onClick={onClose}
-        className="px-4 py-2 bg-gray-300 hover:bg-gray-400 rounded-xl text-sm"
+        className="px-3 py-1 rounded-xl font-semibold cursor-pointer bg-gray-300 hover:bg-gray-400 text-sm"
         >
         Annulla
         </button>
@@ -225,7 +225,7 @@ const TurniForm = ({ onClose, defaultData }: Props) => {
         type="submit"
         disabled={loading}
         onClick={handleSubmit}
-        className="px-4 py-2 bg-[#fdeb90] hover:bg-[#fdea87] text-black font-semibold rounded-xl text-sm"
+        className="px-3 py-1 rounded-xl font-semibold cursor-pointer  hover:bg-gray-200 text-sm"
         >
         Salva
         </button>

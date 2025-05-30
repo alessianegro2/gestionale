@@ -114,7 +114,7 @@ const Attivita = () => {
 
               <div className="grid grid-cols-2">
                 <div className="flex justify-start gap-2 mt-4">
-                  <button
+                  {/*<button
                     onClick={() => {
                       router.push(`/turni`);
                     }}
@@ -122,7 +122,7 @@ const Attivita = () => {
                     style={{backgroundColor: "#465c9783"}}
                   >
                     Turni
-                  </button>
+                  </button>*/}
                   
                 </div>
                 <div className="flex justify-end gap-2 mt-4" >
@@ -131,13 +131,13 @@ const Attivita = () => {
                       setSelectedAttivita(a);
                       setShowForm(true);
                     }}
-                    className="px-3 py-1 bg-[#fdeb90a6] hover:bg-[#fdea87] rounded-xl text-sm font-semibold"
+                    className="px-3 py-1 rounded-xl text-sm font-semibold hover:bg-gray-200 cursor-pointer"
                     >
                     Modifica
                   </button>
                   <button
                     onClick={() => setAttivitaDaEliminare(a)}
-                    className="px-3 py-1 bg-red-400 hover:bg-red-500 rounded-xl text-sm font-semibold text-white"
+                    className="px-3 py-1 bg-red-400 hover:bg-red-500 rounded-xl text-sm font-semibold text-white cursor-pointer"
                   >
                     Elimina
                   </button>

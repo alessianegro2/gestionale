@@ -3,7 +3,6 @@ import { cookies } from "next/headers";
 import { verifyToken } from "../../lib/jwt";
 import { JwtPayload } from 'jsonwebtoken';
 import Link from 'next/link';
-import { redirect } from 'next/navigation';
 
 
 export default async function Navbar() {

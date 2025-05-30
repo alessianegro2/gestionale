@@ -101,12 +101,12 @@ const ProfiloUtente = () => {
             </div>
           </div>
 
-          <Button
+          <button
             onClick={() => setEditPassword(true)}
-            className="mt-4 px-5 py-3 text-sm rounded-xl  bg-red-500 hover:bg-red-600"
+            className="mt-4 px-3 py-1 rounded-xl text-sm font-semibold cursor-pointer bg-red-500 hover:bg-red-600"
           >
             Cambia Password
-          </Button>
+          </button>
         </div>
       ) : (
         <p className="text-xl text-gray-600">Caricamento profilo...</p>
@@ -144,18 +144,18 @@ const ProfiloUtente = () => {
               </div>
 
               <div className="flex justify-between mt-4">
-                <Button
+                <button
                   onClick={() => setEditPassword(false)}
-                  className="px-4 py-2 rounded-xl bg-gray-300 hover:bg-gray-400 text-sm"
+                  className="px-3 py-1 rounded-xl text-sm font-semibold cursor-pointer bg-gray-300 hover:bg-gray-400 te"
                 >
                   Annulla
-                </Button>
-                <Button
+                </button>
+                <button
                   onClick={aggiornaPassword}
-                  className="px-4 py-2 rounded-xl bg-green-400 hover:bg-green-600 text-black text-sm font-semibold"
+                  className="px-3 py-1 rounded-xl text-sm font-semibold cursor-pointer bg-green-400 hover:bg-green-600 "
                 >
                   Conferma
-                </Button>
+                </button>
               </div>
             </div>
           </div>

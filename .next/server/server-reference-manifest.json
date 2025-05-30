@@ -1,17 +1,5 @@
 {
-  "node": {
-    "7f723afe47e95377529ba31c985ad91bb118a6b84a": {
-      "workers": {
-        "app/(dashboard)/home/page": {
-          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5Cnegro%5C%5CDesktop%5C%5Cgestionale%5C%5Csrc%5C%5Ccomponents%5C%5CAttivitaForm.tsx%22%2C%5B%7B%22id%22%3A%227f723afe47e95377529ba31c985ad91bb118a6b84a%22%2C%22exportedName%22%3A%22default%22%7D%5D%5D%5D&__client_imported__=true!",
-          "async": false
-        }
-      },
-      "layer": {
-        "app/(dashboard)/home/page": "action-browser"
-      }
-    }
-  },
+  "node": {},
   "edge": {},
   "encryptionKey": "NhV7ys7k6puIwexD3tj1bKFKKs7QXHn9GBS6YIUQF/Q="
 }

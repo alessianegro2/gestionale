@@ -167,14 +167,14 @@ const AttivitaForm = ({ onClose, defaultData }: Props) => {
         <button
           type="button"
           onClick={onClose}
-          className="px-4 py-2 bg-gray-300 hover:bg-gray-400 rounded-xl text-sm"
+          className="px-3 py-1 rounded-xl text-sm font-semibold cursor-pointer bg-gray-200 hover:bg-gray-400 "
         >
           Annulla
         </button>
         <button
           type="submit"
           disabled={loading}
-          className="px-4 py-2 bg-[#fdeb90] hover:bg-[#fdea87] text-black font-semibold rounded-xl text-sm"
+          className="px-3 py-1 rounded-xl text-sm font-semibold cursor-pointer hover:bg-gray-200"
         >
           Salva
         </button>
