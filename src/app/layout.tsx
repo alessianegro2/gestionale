@@ -8,7 +8,7 @@ export default function DashboardLayout({
   return (
     <html lang="it">
       <head>
-        <title>San Cassiano</title>
+        <title>Gestionale Albese 1917</title>
       </head>
       <body>
         <div className='h-screen' style={{ width: '100%' }}>

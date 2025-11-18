@@ -98,6 +98,7 @@ const IscrittoForm = ({ onClose, defaultData }: Props) => {
   const [error, setError] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
 
+
   useEffect(() => {
     console.log(defaultData)
     fetchAttivita();
@@ -190,7 +191,6 @@ const IscrittoForm = ({ onClose, defaultData }: Props) => {
     }
   }
 
-  
 
   return (
   
@@ -378,6 +378,31 @@ const IscrittoForm = ({ onClose, defaultData }: Props) => {
           </div>
         ))}
       </div>
+
+      {/*DOCUMENTI
+      <h3 className="font-bold text-xl text-center">Documenti</h3>
+      <div className="flex mt-2 text-center">
+        <input type="file" name="documento" value={existingFile} onChange={handleFileChange} className="px-3 py-1 rounded-xl text-sm font-semibold cursor-pointer bg-gray-200 hover:bg-gray-400 mr-4" />
+        <button
+          onClick={handleUpload}
+          className="px-3 py-1 rounded-xl text-sm font-semibold cursor-pointer bg-blue-400 text-white hover:bg-blue-600"
+        >
+          Carica
+        </button>
+        {existingFile ? (
+          <>
+            <button
+              onClick={handleDelete}
+              className="px-3 py-1 rounded-xl text-sm font-semibold cursor-pointer bg-red-400 text-white hover:bg-red-600"
+            >
+              Elimina
+            </button>
+          </>
+        ): null}
+       
+        {message && <p className="mt-2">{message}</p>}
+      </div>*/}
+
 
       <div className="text-center mt-2 min-h-[20px]">
         {loading ? (

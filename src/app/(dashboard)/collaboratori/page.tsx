@@ -1,6 +1,8 @@
+import Collaboratori from "@/components/Collaboratori"
+
 const CollaboratoriPage = () =>{
     return (
-        <div className="">Collaboratori page</div>
+        <Collaboratori></Collaboratori>
     )
 }
 

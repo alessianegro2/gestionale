@@ -1,8 +1,5 @@
 {
-  "/api/getAttivita/route": "app/api/getAttivita/route.js",
-  "/api/getIscritti/route": "app/api/getIscritti/route.js",
   "/page": "app/page.js",
   "/(dashboard)/home/page": "app/(dashboard)/home/page.js",
-  "/(dashboard)/iscritti/page": "app/(dashboard)/iscritti/page.js",
-  "/(dashboard)/attivita/page": "app/(dashboard)/attivita/page.js"
+  "/(dashboard)/squadre/page": "app/(dashboard)/squadre/page.js"
 }

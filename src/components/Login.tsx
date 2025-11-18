@@ -49,14 +49,14 @@ const Login = () => {
       <div className="w-full max-w-md bg-white shadow-xl rounded-2xl p-8">
         <div className="flex justify-center mb-8 border-b-white border-b-2 pb-2">
           <Image
-            src="/sanca-logo.jpg"
+            src="/albese-logo.jpg"
             alt="Logo"
-            width={120}
-            height={120}
+            width={150}
+            height={150}
             className="rounded-full border-3 border-white"
           />
         </div>
-        <h1 className="text-2xl font-semibold text-center mb-6">MySanca</h1>
+        <h1 className="text-2xl font-semibold text-center mb-6">Albese 1917</h1>
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>

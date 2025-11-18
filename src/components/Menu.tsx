@@ -88,10 +88,10 @@ const Menu = () => {
       {/* LOGO */}
       <div className="flex justify-center mb-8 border-b-white border-b-2 pb-4">
         <Image
-          src="/sanca-logo.jpg"
+          src="/albese-logo.jpg"
           alt="Logo"
-          width={90}
-          height={90}
+          width={130}
+          height={130}
           className="rounded-full border-3 border-white"
         />
       </div>
